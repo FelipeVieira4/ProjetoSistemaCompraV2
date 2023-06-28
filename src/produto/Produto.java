@@ -44,7 +44,14 @@ public class Produto {
 		this.setPreco(pPreco);
    		
 	}
-	
+	public Produto(String pCodigo,String pName,float pPreco) {
+		
+		this.codigo=pCodigo;
+		this.setNome(pName);
+
+		this.setPreco(pPreco);
+   		
+	}
 	/**Construtor completo**/
 	public Produto(String pCodigo,String pName,float pPreco,String[] categorias,String pLocalProduzido,String pContatoDistribuidora,String pDecricao) {
 		

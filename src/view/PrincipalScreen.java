@@ -216,7 +216,7 @@ public class PrincipalScreen extends JFrame {
 						table_Lista.setModel(modelo);
 				}
 				
-				GrubDados.salvarProduto(p);
+				GrubDados.salvar(p);
 				
 			}
 		});
@@ -247,8 +247,37 @@ public class PrincipalScreen extends JFrame {
  				"CÓDIGO", "NOME", "PREÇO"
  			}
  		));
- 		table_Lista.setBounds(0, 0, 601, 336);
+ 		table_Lista.setBounds(0, 31, 601, 305);
  		listaPanel.add(table_Lista);
+ 		
+ 		JButton btnAtualizarTabela = new JButton("Atualizar");
+ 		btnAtualizarTabela.addActionListener(new ActionListener() {
+ 			public void actionPerformed(ActionEvent e) {
+ 
+ 					ArrayList<Produto> p = GrubDados.buscaLista();
+ 					
+ 					lista_produtos.remove(codigoTF_deleta.getText());
+ 					
+ 					
+ 					//table_Lista.removeAll();
+ 					DefaultTableModel modelo =(DefaultTableModel) table_Lista.getModel();
+ 					
+ 					modelo.setRowCount(0);//limpa todas as colunas do modelo
+ 					
+ 					//loop adicionar lista_produto ao modelo
+	 				for (Produto produto: p) {
+	 					modelo.addRow(new Object[] {produto.getCodigo(),produto.getNome(),produto.getPreco()});
+						
+	 		        }
+	 				table_Lista.setModel(modelo);
+
+	 							
+ 				
+ 				
+ 			}
+ 		});
+ 		btnAtualizarTabela.setBounds(-1, 5, 89, 23);
+ 		listaPanel.add(btnAtualizarTabela);
  		
  		JPanel buscaPanel = new JPanel();
  		tabbedPane.addTab("Buscar Produto", null, buscaPanel, null);
@@ -371,29 +400,8 @@ public class PrincipalScreen extends JFrame {
  		JButton btnDeletaProduto_deleta = new JButton("DELETAR");
  		btnDeletaProduto_deleta.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
- 				
- 				if(lista_produtos.get(codigoTF_deleta.getText())!=null) {
- 					
- 					
- 					lista_produtos.remove(codigoTF_deleta.getText());
- 					
- 					
- 					//table_Lista.removeAll();
- 					DefaultTableModel modelo =(DefaultTableModel) table_Lista.getModel();
- 					
- 					modelo.setRowCount(0);//limpa todas as colunas do modelo
- 					
- 					//loop adicionar lista_produto ao modelo
-	 				for (String chaves : lista_produtos.keySet()) {
-	 					modelo.addRow(new Object[] {lista_produtos.get(chaves).getCodigo(),lista_produtos.get(chaves).getNome(),lista_produtos.get(chaves).getPreco()});
-						
-	 		        }
-	 				table_Lista.setModel(modelo);
-
-	 							
- 				}
- 				
- 				GrubDados.removeProduto(codigoTF_buscar.getText());
+ 							
+ 				GrubDados.remove(codigoTF_deleta.getText());
  			}
  		});
  		btnDeletaProduto_deleta.setFont(new Font("Tahoma", Font.PLAIN, 12));

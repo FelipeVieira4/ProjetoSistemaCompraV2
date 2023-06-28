@@ -2,47 +2,55 @@ package dados;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import produto.Produto;
 
 public class GrubDados {
 
-	public static void salvarProduto(Produto p) {
-		String sql = "insert into produto(nome,preco) values(?,?)";
 	
-		Connection id = new ConexaoMySQL().conectar();
-	
-		try {
-			PreparedStatement command = id.prepareStatement(sql);
-			command.setString(1,p.getNome());
-			command.setFloat(2, p.getPreco());
-			command.execute();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public static void salvar(Produto p) {
+		
+		String url_command = "insert into produto(nome,preco) values(?,?)";
+		
+		Connection conexao = new ConexaoMySQL().conectar();
 		
 		try {
-			id.close();
+			PreparedStatement state = conexao.prepareStatement(url_command);
+			state.setString(1, p.getNome());
+			state.setFloat(2, p.getPreco());
+			state.execute();
+			state.close();
+		}catch(SQLException io)
+		{
+			io.printStackTrace();
+		}
+		try {
+			conexao.close();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	
 	}
 	
-	public static void removeProduto(String produtoNome) {
+	
+	
+
+	public static void remove(String produtoNome) {
 		String sqlCommand = "delete from produto where nome = ?";
 		
 
 		Connection conexao = new ConexaoMySQL().conectar();
-		
+
+			
 		try {
 			PreparedStatement command = conexao.prepareStatement(sqlCommand);
 			command.setString(1, produtoNome);
 			command.execute();
+			
 		}catch(SQLException io) {
 			io.printStackTrace();
 		}
@@ -54,6 +62,41 @@ public class GrubDados {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	}
+	
+	public static ArrayList<Produto> buscaLista() {
+				
+		String urlCommand = "select * from produto";
+		
+
+		Connection conexao = new ConexaoMySQL().conectar();
+
+		ArrayList<Produto> produtoList = new ArrayList<Produto>();
+		
+		try {
+
+			PreparedStatement estado = conexao.prepareStatement(urlCommand);
+			ResultSet statement = estado.executeQuery();
+			
+			
+			while(statement.next()) {
+				produtoList.add(new Produto(statement.getString("id"),statement.getString("nome"),Float.parseFloat(statement.getString("preco"))));
+			}
+			
+			
+		}catch(SQLException io) {
+			io.printStackTrace();
+		}
+		
+		
+		try {
+			conexao.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return produtoList;
 	}
 	
 }
