@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import produto.Produto;
@@ -99,4 +98,42 @@ public class GrubDados {
 		return produtoList;
 	}
 	
+	public static Produto busca(String nome) {
+		
+		String urlCommand = "select * from produto where nome = ?";
+		
+
+		Connection conexao = new ConexaoMySQL().conectar();
+		
+		
+		Produto produto = new Produto();
+		
+		try {
+
+			PreparedStatement estado = conexao.prepareStatement(urlCommand);
+			estado.setString(1,nome);
+			ResultSet statement = estado.executeQuery();
+			
+			
+			while(statement.next()) {
+				produto.setPreco(Float.parseFloat(statement.getString("preco")));
+				produto.setNome(statement.getString("nome"));
+				produto.setCodigo(statement.getString("id"));
+			}
+			System.out.println(produto.getNome());
+			
+		}catch(SQLException io) {
+			io.printStackTrace();
+		}
+		
+		
+		try {
+			conexao.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return produto;
+	}
 }

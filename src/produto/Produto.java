@@ -104,12 +104,8 @@ public class Produto {
 	}
 
 	/**Setar o codigo de um produto tem regex digitos**/
-	public boolean  setCodigo(String pcodigo) {
-		if(Validacao.Codigo(pcodigo)){
-			this.codigo = pcodigo;
-			return true;
-		}
-		return false;
+	public void  setCodigo(String pcodigo) {
+		this.codigo=pcodigo;
 	}
 	
 	/**Retornar a Distribuidora do produto**/

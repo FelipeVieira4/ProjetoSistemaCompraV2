@@ -19,20 +19,16 @@ import java.awt.Image;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.sql.ConnectionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import dados.ConexaoMySQL;
 import dados.GrubDados;
 
 public class PrincipalScreen extends JFrame {
@@ -51,7 +47,6 @@ public class PrincipalScreen extends JFrame {
 	//Componentes Interface
 	private JTextField precoTF_cadastro;
 	private JTextField nomeTX_cadastro;
-	private JTextField codigoTF_cadastro;
 	private JTextField localTextField;
 	private JTextField contatoTextField;
 	private JTextField categoriasTX_cadastro;
@@ -128,16 +123,6 @@ public class PrincipalScreen extends JFrame {
 		nomeTX_cadastro.setBounds(47, 194, 196, 20);
 		cadastroPanel.add(nomeTX_cadastro);
 		
-		JLabel lbCodigo = new JLabel("codigo");
-		lbCodigo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbCodigo.setBounds(0, 162, 57, 18);
-		cadastroPanel.add(lbCodigo);
-		
-		codigoTF_cadastro = new JTextField();
-		codigoTF_cadastro.setColumns(10);
-		codigoTF_cadastro.setBounds(47, 162, 86, 20);
-		cadastroPanel.add(codigoTF_cadastro);
-		
 		JLabel lbLocalProduzido = new JLabel("Local Produzido");
 		lbLocalProduzido.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lbLocalProduzido.setBounds(0, 288, 120, 18);
@@ -179,11 +164,10 @@ public class PrincipalScreen extends JFrame {
 				Produto p = new Produto();
 				
 				if((precoTF_cadastro.getText().matches("[0-9.]*") && !precoTF_cadastro.getText().isBlank())
-					&& (Validacao.Codigo(codigoTF_cadastro.getText()) && !nomeTX_cadastro.getText().isBlank())) {
+					 && !nomeTX_cadastro.getText().isBlank()) {
 					
 					p.setPreco(Float.parseFloat(precoTF_cadastro.getText()));
 					p.setNome(nomeTX_cadastro.getText());
-					p.setCodigo(codigoTF_cadastro.getText());
 					
 					String[] s = categoriasTX_cadastro.getText().split(" ");
 					p.setCategorias(s);
@@ -207,16 +191,15 @@ public class PrincipalScreen extends JFrame {
 				
 					
 				if(lista_produtos.get(p.getCodigo())==null && validacaoProduto) {//verificar se não existe nenhum produto com esse código
-					
-						lista_produtos.put(p.getCodigo(),p);			
-						
+							
+						GrubDados.salvar(p);
 						
 						DefaultTableModel modelo =(DefaultTableModel) table_Lista.getModel();
 						modelo.addRow(new Object[] {p.getCodigo(),p.getNome(),p.getPreco()});
 						table_Lista.setModel(modelo);
 				}
 				
-				GrubDados.salvar(p);
+				
 				
 			}
 		});
@@ -361,24 +344,12 @@ public class PrincipalScreen extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				
-				if(lista_produtos.get(codigoTF_buscar.getText())!=null) {
-					
-					nomeTF_buscar.setText(lista_produtos.get(codigoTF_buscar.getText()).getNome());
-					lblfoto_buscar.setIcon(lista_produtos.get(codigoTF_buscar.getText()).getIconProduto());
-					precoTF_buscar.setText(String.valueOf(lista_produtos.get(codigoTF_buscar.getText()).getPreco()));
-					
-					localTF_buscar.setText(lista_produtos.get(codigoTF_buscar.getText()).getLocalProduzido());
-					contatoTF_buscar.setText(lista_produtos.get(codigoTF_buscar.getText()).getContatoDistribuidora());
-					
-					categoriasTF_buscar.setText("[");
-					for(String i: lista_produtos.get(codigoTF_buscar.getText()).getCategoriasToArray()) {
-						categoriasTF_buscar.setText(categoriasTF_buscar.getText()+i+",");
-					}
-					categoriasTF_buscar.setText(categoriasTF_buscar.getText()+"]");
-					
-					
-				}
-				else JOptionPane.showMessageDialog(null,"CODIGO DE PRODUTO NÃO ECONTRADO");
+				Produto p = GrubDados.busca(codigoTF_buscar.getText());
+				
+				nomeTF_buscar.setText(p.getNome());
+				precoTF_buscar.setText(String.valueOf(p.getPreco()));
+							
+
 			}
  			
  		});
