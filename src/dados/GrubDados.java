@@ -13,7 +13,7 @@ public class GrubDados {
 	
 	public static void salvar(Produto p) {
 		
-		String url_command = "insert into produto(nome,preco) values(?,?)";
+		String url_command = "insert into produto(nome,preco,caminhoFoto,localproduzido,distribuidora) values(?,?,?,?,?)";
 		
 		Connection conexao = new ConexaoMySQL().conectar();
 		
@@ -21,6 +21,10 @@ public class GrubDados {
 			PreparedStatement state = conexao.prepareStatement(url_command);
 			state.setString(1, p.getNome());
 			state.setFloat(2, p.getPreco());
+			state.setString(3, p.getPatchIcon());
+			state.setString(4, p.getLocalProduzido());
+			state.setString(5, p.getDistribuidora());
+			
 			state.execute();
 			state.close();
 		}catch(SQLException io)
@@ -38,8 +42,8 @@ public class GrubDados {
 	
 	
 
-	public static void remove(String produtoNome) {
-		String sqlCommand = "delete from produto where nome = ?";
+	public static void remove(int id) {
+		String sqlCommand = "delete from produto where id = ?";
 		
 
 		Connection conexao = new ConexaoMySQL().conectar();
@@ -47,7 +51,7 @@ public class GrubDados {
 			
 		try {
 			PreparedStatement command = conexao.prepareStatement(sqlCommand);
-			command.setString(1, produtoNome);
+			command.setInt(1, id);
 			command.execute();
 			
 		}catch(SQLException io) {
@@ -98,9 +102,9 @@ public class GrubDados {
 		return produtoList;
 	}
 	
-	public static Produto busca(String nome) {
+	public static Produto busca(int id) {
 		
-		String urlCommand = "select * from produto where nome = ?";
+		String urlCommand = "select * from produto where id = ?";
 		
 
 		Connection conexao = new ConexaoMySQL().conectar();
@@ -111,7 +115,7 @@ public class GrubDados {
 		try {
 
 			PreparedStatement estado = conexao.prepareStatement(urlCommand);
-			estado.setString(1,nome);
+			estado.setInt(1,id);
 			ResultSet statement = estado.executeQuery();
 			
 			
@@ -119,8 +123,10 @@ public class GrubDados {
 				produto.setPreco(Float.parseFloat(statement.getString("preco")));
 				produto.setNome(statement.getString("nome"));
 				produto.setCodigo(statement.getString("id"));
+				produto.setPatchIcon(statement.getString("caminhoFoto"));
+				produto.setDistribuidora(statement.getString("distribuidora"));
+				produto.setLocalProduzido(statement.getString("localproduzido"));
 			}
-			System.out.println(produto.getNome());
 			
 		}catch(SQLException io) {
 			io.printStackTrace();

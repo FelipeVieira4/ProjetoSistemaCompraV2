@@ -2,7 +2,6 @@ package produto;
 
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 
 /**
 *Usado para criar produtos no banco dados.
@@ -15,14 +14,13 @@ public class Produto {
 	
 	private float preco=0.0f;
 	private String codigo = "";
-	private String nome;
-	private String decricao;
-	private String distribuidora;			//Nome da Distribuidora
-	private String contatoDistribuidora;	//Contato com a Distribuidora(forma: email)
-	private String localProduzido;			//Aonde o produto foi fabricado
-	
-	private ImageIcon iconProduto;
-	private String patchIcon; // Substituir o iconProduto
+	private String nome="";
+	private String decricao="";
+	private String distribuidora="";			//Nome da Distribuidora
+	private String contatoDistribuidora="";	//Contato com a Distribuidora(forma: email)
+	private String localProduzido="";			//Aonde o produto foi fabricado
+
+	private String patchIcon=""; // Substituir o iconProduto
 	
 	private ArrayList<String> categorias=new ArrayList<String>();
 	
@@ -44,14 +42,23 @@ public class Produto {
 		this.setPreco(pPreco);
    		
 	}
+	public Produto(String pCodigo,String pName,float pPreco,String pPatchIcon) {
+		
+		this.codigo=pCodigo;
+		this.setNome(pName);
+
+		this.setPreco(pPreco);
+   		this.setPatchIcon(pPatchIcon);
+	}
+
 	public Produto(String pCodigo,String pName,float pPreco) {
 		
 		this.codigo=pCodigo;
 		this.setNome(pName);
 
 		this.setPreco(pPreco);
-   		
 	}
+	
 	/**Construtor completo**/
 	public Produto(String pCodigo,String pName,float pPreco,String[] categorias,String pLocalProduzido,String pContatoDistribuidora,String pDecricao) {
 		
@@ -114,12 +121,9 @@ public class Produto {
 	}
 
 	/**Setar a Distribuidora do produto**/
-	public boolean setDistribuidora(String pDistribuidora) {
-		if(!pDistribuidora.isBlank()) {
-			this.distribuidora = pDistribuidora;
-			return true;
-		}
-		return false;
+	public void setDistribuidora(String pDistribuidora) {
+		this.distribuidora = pDistribuidora;
+
 	}
 
 	/**Retornar o lugar onde o produto foi produzido**/
@@ -205,12 +209,13 @@ public class Produto {
 			this.categorias.add(i);
 		}
 	}
-	public ImageIcon getIconProduto() {
-		return iconProduto;
+	public String getPatchIcon() {
+		return patchIcon;
 	}
-	public void setIcon(ImageIcon iconProduto) {
-		this.iconProduto = iconProduto;
+	public void setPatchIcon(String patchIcon) {
+		this.patchIcon = patchIcon;
 	}
-		
+
+	
 	
 }

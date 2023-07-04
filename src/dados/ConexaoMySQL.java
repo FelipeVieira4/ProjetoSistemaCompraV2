@@ -39,8 +39,5 @@ public class ConexaoMySQL {
 		return null;
 	}
 	
-	public boolean close() {
-		return true;
-	}
-	
+
 }

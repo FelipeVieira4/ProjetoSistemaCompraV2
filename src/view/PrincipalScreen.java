@@ -47,8 +47,8 @@ public class PrincipalScreen extends JFrame {
 	//Componentes Interface
 	private JTextField precoTF_cadastro;
 	private JTextField nomeTX_cadastro;
-	private JTextField localTextField;
-	private JTextField contatoTextField;
+	private JTextField localTF;
+	private JTextField distribuidoraTF;
 	private JTextField categoriasTX_cadastro;
 	private JTable table_Lista;
 	private JTextField codigoTF_buscar;
@@ -63,6 +63,7 @@ public class PrincipalScreen extends JFrame {
 	private JTextField precoTF_compra;
 	private JTextField qtdaTF_compra;
 	private JTextField removerTF_compra;
+	private JTextField distribuidoraTF_cadastro;
 	
 	/**
 	 * Launch the application.
@@ -105,46 +106,46 @@ public class PrincipalScreen extends JFrame {
 		
 		JLabel lblPreco = new JLabel("preço");
 		lblPreco.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblPreco.setBounds(0, 226, 57, 18);
+		lblPreco.setBounds(0, 180, 57, 18);
 		cadastroPanel.add(lblPreco);
 		
 		precoTF_cadastro = new JTextField();
 		precoTF_cadastro.setColumns(10);
-		precoTF_cadastro.setBounds(47, 226, 86, 20);
+		precoTF_cadastro.setBounds(47, 180, 86, 20);
 		cadastroPanel.add(precoTF_cadastro);
 		
 		JLabel lbNome = new JLabel("nome");
 		lbNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbNome.setBounds(0, 194, 57, 18);
+		lbNome.setBounds(0, 148, 57, 18);
 		cadastroPanel.add(lbNome);
 		
 		nomeTX_cadastro = new JTextField();
 		nomeTX_cadastro.setColumns(10);
-		nomeTX_cadastro.setBounds(47, 194, 196, 20);
+		nomeTX_cadastro.setBounds(47, 148, 196, 20);
 		cadastroPanel.add(nomeTX_cadastro);
 		
 		JLabel lbLocalProduzido = new JLabel("Local Produzido");
 		lbLocalProduzido.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbLocalProduzido.setBounds(0, 288, 120, 18);
+		lbLocalProduzido.setBounds(0, 242, 120, 18);
 		cadastroPanel.add(lbLocalProduzido);
 		
-		localTextField = new JTextField();
-		localTextField.setColumns(10);
-		localTextField.setBounds(144, 284, 187, 20);
-		cadastroPanel.add(localTextField);
+		localTF = new JTextField();
+		localTF.setColumns(10);
+		localTF.setBounds(144, 238, 187, 20);
+		cadastroPanel.add(localTF);
 		
 		JLabel lblContato = new JLabel("Contato Distribuidora");
 		lblContato.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblContato.setBounds(0, 317, 149, 18);
+		lblContato.setBounds(0, 271, 149, 18);
 		cadastroPanel.add(lblContato);
 		
-		contatoTextField = new JTextField();
-		contatoTextField.setColumns(10);
-		contatoTextField.setBounds(144, 318, 187, 20);
-		cadastroPanel.add(contatoTextField);
+		distribuidoraTF = new JTextField();
+		distribuidoraTF.setColumns(10);
+		distribuidoraTF.setBounds(144, 272, 187, 20);
+		cadastroPanel.add(distribuidoraTF);
 		
 		JTextPane descricaoTextPane = new JTextPane();
-		descricaoTextPane.setBounds(279, 130, 322, 124);
+		descricaoTextPane.setBounds(279, 24, 322, 124);
 		cadastroPanel.add(descricaoTextPane);
 		
 		
@@ -160,44 +161,38 @@ public class PrincipalScreen extends JFrame {
 		runButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				boolean validacaoProduto=true;
 				Produto p = new Produto();
 				
-				if((precoTF_cadastro.getText().matches("[0-9.]*") && !precoTF_cadastro.getText().isBlank())
-					 && !nomeTX_cadastro.getText().isBlank()) {
-					
-					p.setPreco(Float.parseFloat(precoTF_cadastro.getText()));
-					p.setNome(nomeTX_cadastro.getText());
-					
-					String[] s = categoriasTX_cadastro.getText().split(" ");
-					p.setCategorias(s);
-					
-					p.setContatoDistribuidora(contatoTextField.getText());
-					p.setLocalProduzido(localTextField.getText());
-					
-					JFileChooser fileChooser = new JFileChooser();
-					fileChooser.showOpenDialog(getParent());
-					
-					File file = fileChooser.getSelectedFile();
-					if(file!=null) {
-						ImageIcon img= new ImageIcon(file.toString());//Carrega imagem
-						//Escalona o img para tamanho do Jlabel lblfoto
-							p.setIcon(new ImageIcon((Image)img.getImage().getScaledInstance(lblfoto.getWidth(),lblfoto.getHeight(),Image.SCALE_SMOOTH)));
-							lblfoto.setIcon(p.getIconProduto());
-					}
-					
-				} else validacaoProduto=false;
+
+				p.setPreco(Float.parseFloat(precoTF_cadastro.getText()));
+				p.setNome(nomeTX_cadastro.getText());
 				
+				String[] s = categoriasTX_cadastro.getText().split(" ");
+				p.setCategorias(s);
 				
+				p.setDistribuidora(distribuidoraTF.getText());
+				
+				System.out.println(distribuidoraTF.getText());
+				System.out.println(p.getDistribuidora());
+				
+				p.setLocalProduzido(localTF.getText());
+				
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.showOpenDialog(getParent());
+				
+				File file = fileChooser.getSelectedFile();
+				if(file!=null) {
+					ImageIcon img= new ImageIcon(file.toString());//Carrega imagem
+
+					lblfoto.setIcon(new ImageIcon((Image)img.getImage().getScaledInstance(lblfoto.getWidth(),lblfoto.getHeight(),Image.SCALE_SMOOTH)));
 					
-				if(lista_produtos.get(p.getCodigo())==null && validacaoProduto) {//verificar se não existe nenhum produto com esse código
-							
-						GrubDados.salvar(p);
-						
-						DefaultTableModel modelo =(DefaultTableModel) table_Lista.getModel();
-						modelo.addRow(new Object[] {p.getCodigo(),p.getNome(),p.getPreco()});
-						table_Lista.setModel(modelo);
+					
+					p.setPatchIcon(fileChooser.getSelectedFile().toString());
+					System.out.println(p.getPatchIcon());
 				}
+					
+				GrubDados.salvar(p);
+				
 				
 				
 				
@@ -207,15 +202,25 @@ public class PrincipalScreen extends JFrame {
 		cadastroPanel.add(runButton);
 		
  		categoriasTX_cadastro = new JTextField();
- 		lblDescricao.setBounds(279, 106, 120, 25);
- 		categoriasTX_cadastro.setBounds(144, 257, 447, 20);
+ 		lblDescricao.setBounds(279, 0, 120, 25);
+ 		categoriasTX_cadastro.setBounds(144, 211, 447, 20);
  		cadastroPanel.add(categoriasTX_cadastro);
  		categoriasTX_cadastro.setColumns(10);
  		
  		JLabel lblCategorias = new JLabel("Categorias");
  		lblCategorias.setFont(new Font("Tahoma", Font.PLAIN, 15));
- 		lblCategorias.setBounds(0, 261, 120, 18);
+ 		lblCategorias.setBounds(0, 215, 120, 18);
  		cadastroPanel.add(lblCategorias);
+ 		
+ 		distribuidoraTF_cadastro = new JTextField();
+ 		distribuidoraTF_cadastro.setColumns(10);
+ 		distribuidoraTF_cadastro.setBounds(144, 301, 273, 20);
+ 		cadastroPanel.add(distribuidoraTF_cadastro);
+ 		
+ 		JLabel lbldistribuidora = new JLabel("Distribuidora");
+ 		lbldistribuidora.setFont(new Font("Tahoma", Font.PLAIN, 15));
+ 		lbldistribuidora.setBounds(0, 300, 149, 18);
+ 		cadastroPanel.add(lbldistribuidora);
  		
  		JPanel listaPanel = new JPanel();
  		tabbedPane.addTab("Lista Produto", null, listaPanel, null);
@@ -344,12 +349,18 @@ public class PrincipalScreen extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				
-				Produto p = GrubDados.busca(codigoTF_buscar.getText());
-				
-				nomeTF_buscar.setText(p.getNome());
-				precoTF_buscar.setText(String.valueOf(p.getPreco()));
-							
-
+				if(codigoTF_buscar.getText().matches("[0-9]*")) {
+					Produto p = GrubDados.busca(Integer.parseInt(codigoTF_buscar.getText()));
+					
+					nomeTF_buscar.setText(p.getNome());
+					precoTF_buscar.setText(String.valueOf(p.getPreco()));
+					
+					contatoTF_buscar.setText(p.getDistribuidora());
+					localTF_buscar.setText(p.getLocalProduzido());
+					
+					ImageIcon img= new ImageIcon(p.getPatchIcon());//Carrega imagem
+					lblfoto_buscar.setIcon(new ImageIcon((Image)img.getImage().getScaledInstance(lblfoto.getWidth(),lblfoto.getHeight(),Image.SCALE_SMOOTH)));	
+				}
 			}
  			
  		});
@@ -371,8 +382,7 @@ public class PrincipalScreen extends JFrame {
  		JButton btnDeletaProduto_deleta = new JButton("DELETAR");
  		btnDeletaProduto_deleta.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
- 							
- 				GrubDados.remove(codigoTF_deleta.getText());
+ 				if(codigoTF_deleta.getText().matches("[0-9]*"))GrubDados.remove(Integer.parseInt(codigoTF_deleta.getText()));
  			}
  		});
  		btnDeletaProduto_deleta.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -463,7 +473,7 @@ public class PrincipalScreen extends JFrame {
  			public void actionPerformed(ActionEvent e) {
  				
  							
- 				if(Validacao.IntTipo(removerTF_compra.getText()) && lista_compra.size()>Integer.parseInt(removerTF_compra.getText()) && Integer.parseInt(removerTF_compra.getText())>=0){
+ 				if(removerTF_compra.getText().matches("[0-9]*") && lista_compra.size()>Integer.parseInt(removerTF_compra.getText()) && Integer.parseInt(removerTF_compra.getText())>=0){
  					lista_compra.remove(Integer.parseInt(removerTF_compra.getText()));
  					
  					DefaultTableModel modelo = (DefaultTableModel) tableCompra.getModel();
