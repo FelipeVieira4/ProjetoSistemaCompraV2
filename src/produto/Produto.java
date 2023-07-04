@@ -16,7 +16,6 @@ public class Produto {
 	private String codigo = "";
 	private String nome="";
 	private String decricao="";
-	private String distribuidora="";			//Nome da Distribuidora
 	private String contatoDistribuidora="";	//Contato com a Distribuidora(forma: email)
 	private String localProduzido="";			//Aonde o produto foi fabricado
 
@@ -71,7 +70,7 @@ public class Produto {
 			this.setCategorias(i);
 		}
 		
-		this.setDistribuidora(contatoDistribuidora);
+
 		this.setLocalProduzido(localProduzido);
 		
 	}
@@ -113,17 +112,6 @@ public class Produto {
 	/**Setar o codigo de um produto tem regex digitos**/
 	public void  setCodigo(String pcodigo) {
 		this.codigo=pcodigo;
-	}
-	
-	/**Retornar a Distribuidora do produto**/
-	public String getDistribuidora() {
-		return distribuidora;
-	}
-
-	/**Setar a Distribuidora do produto**/
-	public void setDistribuidora(String pDistribuidora) {
-		this.distribuidora = pDistribuidora;
-
 	}
 
 	/**Retornar o lugar onde o produto foi produzido**/

@@ -4,7 +4,7 @@ nome varchar(255),
 contato varchar(255)
 );
 
-create table distribuidora(
+create table produto(
 id int primary key auto_increment,
 preco float,
 nome varchar(255),

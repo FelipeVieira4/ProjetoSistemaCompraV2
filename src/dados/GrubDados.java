@@ -23,7 +23,7 @@ public class GrubDados {
 			state.setFloat(2, p.getPreco());
 			state.setString(3, p.getPatchIcon());
 			state.setString(4, p.getLocalProduzido());
-			state.setString(5, p.getDistribuidora());
+			state.setString(5, p.getContatoDistribuidora());
 			
 			state.execute();
 			state.close();
@@ -124,7 +124,7 @@ public class GrubDados {
 				produto.setNome(statement.getString("nome"));
 				produto.setCodigo(statement.getString("id"));
 				produto.setPatchIcon(statement.getString("caminhoFoto"));
-				produto.setDistribuidora(statement.getString("distribuidora"));
+				produto.setContatoDistribuidora(statement.getString("distribuidora"));
 				produto.setLocalProduzido(statement.getString("localproduzido"));
 			}
 			

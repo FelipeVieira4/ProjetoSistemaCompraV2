@@ -63,7 +63,6 @@ public class PrincipalScreen extends JFrame {
 	private JTextField precoTF_compra;
 	private JTextField qtdaTF_compra;
 	private JTextField removerTF_compra;
-	private JTextField distribuidoraTF_cadastro;
 	
 	/**
 	 * Launch the application.
@@ -170,11 +169,10 @@ public class PrincipalScreen extends JFrame {
 				String[] s = categoriasTX_cadastro.getText().split(" ");
 				p.setCategorias(s);
 				
-				p.setDistribuidora(distribuidoraTF.getText());
+				p.setContatoDistribuidora(distribuidoraTF.getText());
 				
 				System.out.println(distribuidoraTF.getText());
-				System.out.println(p.getDistribuidora());
-				
+
 				p.setLocalProduzido(localTF.getText());
 				
 				JFileChooser fileChooser = new JFileChooser();
@@ -212,16 +210,6 @@ public class PrincipalScreen extends JFrame {
  		lblCategorias.setBounds(0, 215, 120, 18);
  		cadastroPanel.add(lblCategorias);
  		
- 		distribuidoraTF_cadastro = new JTextField();
- 		distribuidoraTF_cadastro.setColumns(10);
- 		distribuidoraTF_cadastro.setBounds(144, 301, 273, 20);
- 		cadastroPanel.add(distribuidoraTF_cadastro);
- 		
- 		JLabel lbldistribuidora = new JLabel("Distribuidora");
- 		lbldistribuidora.setFont(new Font("Tahoma", Font.PLAIN, 15));
- 		lbldistribuidora.setBounds(0, 300, 149, 18);
- 		cadastroPanel.add(lbldistribuidora);
- 		
  		JPanel listaPanel = new JPanel();
  		tabbedPane.addTab("Lista Produto", null, listaPanel, null);
  		listaPanel.setLayout(null);
@@ -235,7 +223,7 @@ public class PrincipalScreen extends JFrame {
  				"CÓDIGO", "NOME", "PREÇO"
  			}
  		));
- 		table_Lista.setBounds(0, 31, 601, 305);
+ 		table_Lista.setBounds(0, 48, 601, 288);
  		listaPanel.add(table_Lista);
  		
  		JButton btnAtualizarTabela = new JButton("Atualizar");
@@ -266,6 +254,21 @@ public class PrincipalScreen extends JFrame {
  		});
  		btnAtualizarTabela.setBounds(-1, 5, 89, 23);
  		listaPanel.add(btnAtualizarTabela);
+ 		
+ 		JLabel lbl_idLista = new JLabel("ID");
+ 		lbl_idLista.setFont(new Font("Tahoma", Font.PLAIN, 14));
+ 		lbl_idLista.setBounds(9, 28, 107, 14);
+ 		listaPanel.add(lbl_idLista);
+ 		
+ 		JLabel lbl_nomeLista = new JLabel("NOME");
+ 		lbl_nomeLista.setFont(new Font("Tahoma", Font.PLAIN, 14));
+ 		lbl_nomeLista.setBounds(198, 28, 107, 14);
+ 		listaPanel.add(lbl_nomeLista);
+ 		
+ 		JLabel lbl_precoLista = new JLabel("PREÇO");
+ 		lbl_precoLista.setFont(new Font("Tahoma", Font.PLAIN, 14));
+ 		lbl_precoLista.setBounds(400, 30, 107, 14);
+ 		listaPanel.add(lbl_precoLista);
  		
  		JPanel buscaPanel = new JPanel();
  		tabbedPane.addTab("Buscar Produto", null, buscaPanel, null);
@@ -355,7 +358,7 @@ public class PrincipalScreen extends JFrame {
 					nomeTF_buscar.setText(p.getNome());
 					precoTF_buscar.setText(String.valueOf(p.getPreco()));
 					
-					contatoTF_buscar.setText(p.getDistribuidora());
+					contatoTF_buscar.setText(p.getContatoDistribuidora());
 					localTF_buscar.setText(p.getLocalProduzido());
 					
 					ImageIcon img= new ImageIcon(p.getPatchIcon());//Carrega imagem
