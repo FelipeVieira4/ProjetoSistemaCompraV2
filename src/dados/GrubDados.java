@@ -17,10 +17,10 @@ public class GrubDados {
 		
 		String url_command = "insert into produto(nome,preco,caminhoFoto,localproduzido,contatoDistribuidora,descricao) values(?,?,?,?,?,?)";
 
-		ConexaoMySQL2 conexao = new ConexaoMySQL2();
+		ConexaoMySQL conexaoSQL = new ConexaoMySQL();
 		
 		try {
-			PreparedStatement state = conexao.getConexao().prepareStatement(url_command);
+			PreparedStatement state = conexaoSQL.getConexao().prepareStatement(url_command);
 			
 			state.setString(1, p.getNome());
 			state.setFloat(2, p.getPreco());
@@ -36,7 +36,7 @@ public class GrubDados {
 			io.printStackTrace();
 		}
 
-		conexao.closeConexao();
+		conexaoSQL.closeConexao();
 
 	}
 	
@@ -47,11 +47,11 @@ public class GrubDados {
 	 * */
 	public static void remove(int id) {
 		String sqlCommand = "delete from produto where id = ?";
-		Connection conexao = new ConexaoMySQL().conectar();
-
+		
+		ConexaoMySQL conexaoSQL = new ConexaoMySQL();
 			
 		try {
-			PreparedStatement command = conexao.prepareStatement(sqlCommand);
+			PreparedStatement command = conexaoSQL.getConexao().prepareStatement(sqlCommand);
 			command.setInt(1, id);
 			command.execute();
 			
@@ -60,12 +60,7 @@ public class GrubDados {
 		}
 		
 		
-		try {
-			conexao.close();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		conexaoSQL.closeConexao();
 	}
 	
 	/*
@@ -74,13 +69,17 @@ public class GrubDados {
 	public static ArrayList<Produto> buscaLista() {
 				
 		String urlCommand = "select * from produto";
-		Connection conexao = new ConexaoMySQL().conectar();
+		
+		//Connection conexao = new ConexaoMySQL().conectar();
 
+		ConexaoMySQL conexaoSQL = new ConexaoMySQL();
+		
+		
 		ArrayList<Produto> produtoList = new ArrayList<Produto>();
 		
 		try {
 
-			PreparedStatement estado = conexao.prepareStatement(urlCommand);
+			PreparedStatement estado = conexaoSQL.getConexao().prepareStatement(urlCommand);
 			ResultSet statement = estado.executeQuery();
 			
 			
@@ -94,12 +93,7 @@ public class GrubDados {
 		}
 		
 		
-		try {
-			conexao.close();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		conexaoSQL.closeConexao();
 		
 		return produtoList;
 	}
@@ -112,14 +106,14 @@ public class GrubDados {
 		String urlCommand = "select * from produto where id = ?";
 		
 
-		Connection conexao = new ConexaoMySQL().conectar();
-		
+		//Connection conexao = new ConexaoMySQL_descontinuado().conectar();
+		ConexaoMySQL conexaoSQL = new ConexaoMySQL();
 		
 		Produto produto = new Produto();
 		
 		try {
 
-			PreparedStatement estado = conexao.prepareStatement(urlCommand);
+			PreparedStatement estado = conexaoSQL.getConexao().prepareStatement(urlCommand);
 			estado.setInt(1,id);
 			ResultSet statement = estado.executeQuery();
 			
@@ -139,12 +133,7 @@ public class GrubDados {
 		}
 		
 		
-		try {
-			conexao.close();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		conexaoSQL.closeConexao();
 		
 		return produto;
 	}
