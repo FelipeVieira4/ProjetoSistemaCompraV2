@@ -156,7 +156,7 @@ public class PrincipalScreen extends JFrame {
  		lblfoto.setBounds(0, 11, 150, 120);
  		cadastroPanel.add(lblfoto);
  		
-		JButton runButton = new JButton("RUN");
+		JButton runButton = new JButton("ADD");
 		runButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -174,6 +174,7 @@ public class PrincipalScreen extends JFrame {
 				System.out.println(distribuidoraTF.getText());
 
 				p.setLocalProduzido(localTF.getText());
+				p.setDecricao(descricaoTextPane.getText());
 				
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.showOpenDialog(getParent());
@@ -309,7 +310,7 @@ public class PrincipalScreen extends JFrame {
  		categoriasTF_buscar = new JTextField();
  		categoriasTF_buscar.setEditable(false);
  		categoriasTF_buscar.setColumns(10);
- 		categoriasTF_buscar.setBounds(144, 214, 447, 20);
+ 		categoriasTF_buscar.setBounds(144, 214, 187, 20);
  		buscaPanel.add(categoriasTF_buscar);
  		
  		JLabel lblCategorias_buscar = new JLabel("Categorias");
@@ -340,12 +341,22 @@ public class PrincipalScreen extends JFrame {
  		buscaPanel.add(nomeTF_buscar);
  		
  		JLabel lblfoto_buscar = new JLabel("");
- 		lblfoto_buscar.setBounds(441, 12, 150, 120);
+ 		lblfoto_buscar.setBounds(165, 11, 150, 120);
  		buscaPanel.add(lblfoto_buscar);
  		
  		JButton btnProcurar_buscar = new JButton("Procurar");
  		btnProcurar_buscar.setBounds(10, 60, 98, 25);
  		buscaPanel.add(btnProcurar_buscar);
+ 		
+ 		JTextPane descricaoTP_buscar = new JTextPane();
+ 		descricaoTP_buscar.setEditable(false);
+ 		descricaoTP_buscar.setBounds(362, 84, 229, 211);
+ 		buscaPanel.add(descricaoTP_buscar);
+ 		
+ 		JLabel lblDescricao_1 = new JLabel("Descrição Produto");
+ 		lblDescricao_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+ 		lblDescricao_1.setBounds(362, 58, 120, 25);
+ 		buscaPanel.add(lblDescricao_1);
  		
  		btnProcurar_buscar.addActionListener(new ActionListener() {
 			@Override
@@ -360,6 +371,8 @@ public class PrincipalScreen extends JFrame {
 					
 					contatoTF_buscar.setText(p.getContatoDistribuidora());
 					localTF_buscar.setText(p.getLocalProduzido());
+					
+					descricaoTP_buscar.setText(p.getDecricao());
 					
 					ImageIcon img= new ImageIcon(p.getPatchIcon());//Carrega imagem
 					lblfoto_buscar.setIcon(new ImageIcon((Image)img.getImage().getScaledInstance(lblfoto.getWidth(),lblfoto.getHeight(),Image.SCALE_SMOOTH)));	

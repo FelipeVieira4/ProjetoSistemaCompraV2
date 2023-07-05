@@ -13,7 +13,7 @@ public class GrubDados {
 	
 	public static void salvar(Produto p) {
 		
-		String url_command = "insert into produto(nome,preco,caminhoFoto,localproduzido,distribuidora) values(?,?,?,?,?)";
+		String url_command = "insert into produto(nome,preco,caminhoFoto,localproduzido,contatoDistribuidora,descricao) values(?,?,?,?,?,?)";
 		
 		Connection conexao = new ConexaoMySQL().conectar();
 		
@@ -24,6 +24,7 @@ public class GrubDados {
 			state.setString(3, p.getPatchIcon());
 			state.setString(4, p.getLocalProduzido());
 			state.setString(5, p.getContatoDistribuidora());
+			state.setString(6, p.getDecricao());			
 			
 			state.execute();
 			state.close();
@@ -83,7 +84,7 @@ public class GrubDados {
 			
 			
 			while(statement.next()) {
-				produtoList.add(new Produto(statement.getString("id"),statement.getString("nome"),Float.parseFloat(statement.getString("preco"))));
+				produtoList.add(new Produto(statement.getString("id"),statement.getString("nome"),Float.parseFloat(statement.getString("preco")),statement.getString("descricao")));
 			}
 			
 			
@@ -124,8 +125,9 @@ public class GrubDados {
 				produto.setNome(statement.getString("nome"));
 				produto.setCodigo(statement.getString("id"));
 				produto.setPatchIcon(statement.getString("caminhoFoto"));
-				produto.setContatoDistribuidora(statement.getString("distribuidora"));
+				produto.setContatoDistribuidora(statement.getString("contatoDistribuidora"));
 				produto.setLocalProduzido(statement.getString("localproduzido"));
+				produto.setDecricao(statement.getString("descricao"));
 			}
 			
 		}catch(SQLException io) {
