@@ -13,7 +13,11 @@ public class ConexaoMySQL {
 	//url=endereço do servidor MySQL
 	private String url = "jdbc:mysql://localhost:3306/"+database;
 	
-								
+	/*
+	 * Método que retornar uma conexão ao banco de dados "test"
+	 * 
+	 * */
+	
 	public Connection conectar() {
 		
 		try {
@@ -38,6 +42,7 @@ public class ConexaoMySQL {
 		
 		return null;
 	}
+	
 	
 
 }

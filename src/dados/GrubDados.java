@@ -10,7 +10,9 @@ import produto.Produto;
 
 public class GrubDados {
 
-	
+	/*
+	 * Adicionar um novo produto ao banco de dados utilizando os valores de um objeto produto já existente
+	 * */
 	public static void salvar(Produto p) {
 		
 		String url_command = "insert into produto(nome,preco,caminhoFoto,localproduzido,contatoDistribuidora,descricao) values(?,?,?,?,?,?)";
@@ -19,6 +21,7 @@ public class GrubDados {
 		
 		try {
 			PreparedStatement state = conexao.prepareStatement(url_command);
+			
 			state.setString(1, p.getNome());
 			state.setFloat(2, p.getPreco());
 			state.setString(3, p.getPatchIcon());
@@ -42,11 +45,11 @@ public class GrubDados {
 	
 	
 	
-
+	/*
+	 * Método remover um determinado produto do banco de dados atráves do seu ID
+	 * */
 	public static void remove(int id) {
 		String sqlCommand = "delete from produto where id = ?";
-		
-
 		Connection conexao = new ConexaoMySQL().conectar();
 
 			
@@ -68,11 +71,12 @@ public class GrubDados {
 		}
 	}
 	
+	/*
+	 * Método retornar uma Lista dos produtos no banco de dados
+	 * */
 	public static ArrayList<Produto> buscaLista() {
 				
 		String urlCommand = "select * from produto";
-		
-
 		Connection conexao = new ConexaoMySQL().conectar();
 
 		ArrayList<Produto> produtoList = new ArrayList<Produto>();
@@ -103,6 +107,9 @@ public class GrubDados {
 		return produtoList;
 	}
 	
+	/*
+	 * Método retornar os valores de um determinado produto utilizando o seu ID 
+	 * */
 	public static Produto busca(int id) {
 		
 		String urlCommand = "select * from produto where id = ?";
