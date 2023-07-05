@@ -16,11 +16,11 @@ public class GrubDados {
 	public static void salvar(Produto p) {
 		
 		String url_command = "insert into produto(nome,preco,caminhoFoto,localproduzido,contatoDistribuidora,descricao) values(?,?,?,?,?,?)";
-		
-		Connection conexao = new ConexaoMySQL().conectar();
+
+		ConexaoMySQL2 conexao = new ConexaoMySQL2();
 		
 		try {
-			PreparedStatement state = conexao.prepareStatement(url_command);
+			PreparedStatement state = conexao.getConexao().prepareStatement(url_command);
 			
 			state.setString(1, p.getNome());
 			state.setFloat(2, p.getPreco());
@@ -35,12 +35,9 @@ public class GrubDados {
 		{
 			io.printStackTrace();
 		}
-		try {
-			conexao.close();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+
+		conexao.closeConexao();
+
 	}
 	
 	
