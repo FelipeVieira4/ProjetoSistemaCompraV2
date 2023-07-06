@@ -12,7 +12,6 @@ import produto.*;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Image;
