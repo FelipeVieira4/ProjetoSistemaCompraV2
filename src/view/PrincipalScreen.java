@@ -436,15 +436,21 @@ public class PrincipalScreen extends JFrame {
  		bntAdicionar_produto.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
  				
- 				if(Validacao.IntTipo(qtdaTF_compra.getText()) && lista_produtos.get(codigoTF_Compra.getText())!=null) {
- 					CompraProduto p = new CompraProduto(lista_produtos.get(codigoTF_Compra.getText()),Integer.parseInt(qtdaTF_compra.getText()));
- 					p.setCodigo(String.valueOf(lista_compra.size()));
+ 				if(qtdaTF_compra.getText().matches("[0-9]*") && codigoTF_Compra.getText().matches("[0-9]*")) {
+ 					
+ 					CompraProduto p = new CompraProduto(GrubDados.busca(Integer.parseInt(codigoTF_Compra.getText())),Integer.parseInt(qtdaTF_compra.getText()));
  					p.setPrecoTotal();
  					lista_compra.add(p);
  					
+ 					
+ 					
+ 					//Adicionar informaçoes do produto na Tabela
  					DefaultTableModel modelo =(DefaultTableModel) tableCompra.getModel();
  					modelo.addRow(new Object[] {p.getProduto().getNome(),p.getQtda(),p.getPrecoTotal(),lista_compra.size()-1});
  					tableCompra.setModel(modelo);
+ 					
+ 					
+ 					
  				}
  			}
  		});
