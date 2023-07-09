@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import produto.Produto;
 
 public class GrubDados {
-
+	
+	public GrubDados() {
+		
+	}
 	/*
 	 * Adicionar um novo produto ao banco de dados utilizando os valores de um objeto produto já existente
 	 * */

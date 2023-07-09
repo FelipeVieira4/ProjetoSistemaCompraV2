@@ -10,11 +10,13 @@ import java.sql.Connection;
 
 public class ConexaoMySQL {
 	private String database = "test";
-	private String usuario = "root";
+	
+	private String usuario = "user_0";
 	private String senha = "root";
 	
 	//url=endereço do servidor MySQL
-	private String url = "jdbc:mysql://localhost:3306/"+database;
+	private String url_mysql = "jdbc:mysql://localhost:3306/"+database;
+	private String url_mariadb = "jdbc:mariadb://localhost:3306/"+database;
 	
 	private Connection conexao;
 	
@@ -24,33 +26,48 @@ public class ConexaoMySQL {
 	 * */
 	public ConexaoMySQL() {
 		
-		if(!this.conectar()) {
+		if(!this.conectarMariaDB() && !this.conectarMySQL()) {
 			JOptionPane.showMessageDialog(null, "Sem sucesso ao conectar o banco dados", database, JOptionPane.CANCEL_OPTION);
 			System.exit(-1);
 		}
 	}
 	
-	public boolean conectar() {
+	public boolean conectarMariaDB() {
 		
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+		try{
+			Class.forName("org.mariadb.jdbc.Driver");
+		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			return false;
 		}
 
 		try {
-			conexao = DriverManager.getConnection(url,usuario,senha);
+			conexao = DriverManager.getConnection(url_mariadb,usuario,senha);
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
-		return false;
 		
 	}
 	
+	public boolean conectarMySQL() {
+		
+		
+		try{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		}catch (ClassNotFoundException e) {
+			return false;
+		}
+
+		try {
+			conexao = DriverManager.getConnection(url_mysql,usuario,senha);
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+		
+	}
 
 	public void closeConexao() {
 		try {
@@ -61,7 +78,6 @@ public class ConexaoMySQL {
 		}
 	}
 	
-	@SuppressWarnings("exports")
 	public Connection getConexao() {
 		return this.conexao;
 	}

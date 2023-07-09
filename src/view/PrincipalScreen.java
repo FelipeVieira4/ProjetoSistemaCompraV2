@@ -37,6 +37,7 @@ public class PrincipalScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
 
 	
 	private HashMap<String, Produto> lista_produtos = new HashMap<String, Produto>();
@@ -63,6 +64,8 @@ public class PrincipalScreen extends JFrame {
 	private JTextField qtdaTF_compra;
 	private JTextField removerTF_compra;
 	
+	
+
 	/**
 	 * Launch the application.
 	 */
