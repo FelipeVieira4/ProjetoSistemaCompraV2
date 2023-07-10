@@ -36,18 +36,16 @@ public class ConexaoMySQL {
 		
 		try{
 			Class.forName("org.mariadb.jdbc.Driver");
+			conexao = DriverManager.getConnection(url_mariadb,usuario,senha);
+			return true;
 		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
 
-		try {
-			conexao = DriverManager.getConnection(url_mariadb,usuario,senha);
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
 		
 	}
 	
@@ -56,14 +54,12 @@ public class ConexaoMySQL {
 		
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
+			conexao = DriverManager.getConnection(url_mysql,usuario,senha);
+			return true;
 		}catch (ClassNotFoundException e) {
 			return false;
 		}
-
-		try {
-			conexao = DriverManager.getConnection(url_mysql,usuario,senha);
-			return true;
-		} catch (SQLException e) {
+		catch (SQLException e) {
 			return false;
 		}
 		
