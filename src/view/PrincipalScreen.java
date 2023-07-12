@@ -171,6 +171,8 @@ public class PrincipalScreen extends JFrame {
 				p.setLocalProduzido(localTF.getText());
 				p.setDecricao(descricaoTextPane.getText());
 				
+				p.setCategoria(categoriasTX_cadastro.getText());
+				
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.showOpenDialog(getParent());
 				

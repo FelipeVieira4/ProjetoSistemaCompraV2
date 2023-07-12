@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import java.sql.Connection;
 
 public class ConexaoMySQL {
-	private String database = "test";
+	private String database = "bc_felipe_vieira";
 	
 	private String usuario = "root";
 	private String senha = "root";

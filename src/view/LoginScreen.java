@@ -81,6 +81,8 @@ public class LoginScreen extends JFrame {
 		botaoOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				
+				
 				if(usuario.getText().equals(login) && String.valueOf(password.getPassword()).equals(SenhaText)) {
 					PrincipalScreen  principal = new PrincipalScreen();
 					principal.setVisible(true);

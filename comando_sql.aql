@@ -1,3 +1,7 @@
+drop database bc_felipe_vieira;
+create database bc_felipe_vieira;
+use bc_felipe_vieira;
+
 create table produto(
 	id int primary key auto_increment,
 	preco float,
@@ -5,7 +9,8 @@ create table produto(
 	caminhoFoto varchar(255),
 	contatoDistribuidora varchar(255),
 	localproduzido varchar(255),
-	descricao varchar(255)
+	descricao varchar(255),
+	categoria varchar(255)
 );
 
 create table user_info(
