@@ -399,6 +399,9 @@ public class PrincipalScreen extends JFrame {
  		btnDeletaProduto_deleta.setBounds(20, 48, 89, 34);
  		deletePanel.add(btnDeletaProduto_deleta);
  		
+ 		JPanel updatePanel = new JPanel();
+ 		tabbedPane.addTab("New tab", null, updatePanel, null);
+ 		
  		JPanel listaCompraPanel = new JPanel();
  		tabbedPane.addTab("Compra", null, listaCompraPanel, null);
  		listaCompraPanel.setLayout(null);
