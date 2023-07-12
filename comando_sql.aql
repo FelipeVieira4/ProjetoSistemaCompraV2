@@ -1,4 +1,4 @@
-drop database bc_felipe_vieira;
+#drop database bc_felipe_vieira;
 create database bc_felipe_vieira;
 use bc_felipe_vieira;
 
