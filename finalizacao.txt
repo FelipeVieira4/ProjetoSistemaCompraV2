@@ -1,0 +1,5 @@
+1 - Adicionar categoria
+2 - Fazer a parte Update do GRUD
+3 - Fazer o calculo de preço do Sistema de Compra
+4 - Atualização
+5 - Criar uma tabela no banco dados para armazenar os dados no programa

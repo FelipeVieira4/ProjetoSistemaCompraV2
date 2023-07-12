@@ -11,7 +11,7 @@ import java.sql.Connection;
 public class ConexaoMySQL {
 	private String database = "test";
 	
-	private String usuario = "user_0";
+	private String usuario = "root";
 	private String senha = "root";
 	
 	//url=endereço do servidor MySQL
@@ -39,10 +39,8 @@ public class ConexaoMySQL {
 			conexao = DriverManager.getConnection(url_mariadb,usuario,senha);
 			return true;
 		}catch (ClassNotFoundException e) {
-			e.printStackTrace();
 			return false;
 		}catch (SQLException e) {
-			e.printStackTrace();
 			return false;
 		}
 

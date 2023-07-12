@@ -40,8 +40,7 @@ public class PrincipalScreen extends JFrame {
 	
 
 	
-	private HashMap<String, Produto> lista_produtos = new HashMap<String, Produto>();
-	
+
 	private ArrayList<CompraProduto> lista_compra = new ArrayList<CompraProduto>();
 	
 	//Componentes Interface
@@ -234,9 +233,7 @@ public class PrincipalScreen extends JFrame {
  			public void actionPerformed(ActionEvent e) {
  
  					ArrayList<Produto> p = GrubDados.buscaLista();
- 					
- 					lista_produtos.remove(codigoTF_deleta.getText());
- 					
+	
  					
  					//table_Lista.removeAll();
  					DefaultTableModel modelo =(DefaultTableModel) table_Lista.getModel();
@@ -440,17 +437,21 @@ public class PrincipalScreen extends JFrame {
  				
  				if(qtdaTF_compra.getText().matches("[0-9]*") && codigoTF_Compra.getText().matches("[0-9]*")) {
  					
- 					CompraProduto p = new CompraProduto(GrubDados.busca(Integer.parseInt(codigoTF_Compra.getText())),Integer.parseInt(qtdaTF_compra.getText()));
- 					p.setPrecoTotal();
- 					lista_compra.add(p);
+ 					Produto p =GrubDados.busca(Integer.parseInt(codigoTF_Compra.getText()));
  					
- 					
- 					
- 					//Adicionar informaçoes do produto na Tabela
- 					DefaultTableModel modelo =(DefaultTableModel) tableCompra.getModel();
- 					modelo.addRow(new Object[] {p.getProduto().getNome(),p.getQtda(),p.getPrecoTotal(),lista_compra.size()-1});
- 					tableCompra.setModel(modelo);
- 					
+ 					if(p.getCodigo()!=null) {
+ 						CompraProduto cp = new CompraProduto(p,Integer.parseInt(qtdaTF_compra.getText()));
+ 	 					
+ 						cp.setPrecoTotal();
+	 					lista_compra.add(cp);
+	 					
+	 					
+	 					
+	 					//Adicionar informaçoes do produto na Tabela
+	 					DefaultTableModel modelo =(DefaultTableModel) tableCompra.getModel();
+	 					modelo.addRow(new Object[] {cp.getProduto().getNome(),cp.getQtda(),cp.getPrecoTotal(),lista_compra.size()-1});
+	 					tableCompra.setModel(modelo);
+ 					}
  					
  					
  				}

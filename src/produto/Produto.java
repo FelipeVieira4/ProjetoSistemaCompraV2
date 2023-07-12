@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Produto {
 	
 	private float preco=0.0f;
-	private String codigo = "";
+	private String codigo;
 	private String nome="";
 	private String decricao="";
 	private String contatoDistribuidora="";	//Contato com a Distribuidora(forma: email)
