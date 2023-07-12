@@ -19,24 +19,18 @@ public class Produto {
 	private String contatoDistribuidora="";	//Contato com a Distribuidora(forma: email)
 	private String localProduzido="";			//Aonde o produto foi fabricado
 
+	private String categoria;
 	private String patchIcon=""; // Substituir o iconProduto
-	
-	private ArrayList<String> categorias=new ArrayList<String>();
-	
+
 	
 	public Produto() {
 		
 	}
 	/**Construtor simples**/
-	public Produto(String pCodigo,String pName,float pPreco,String[] categorias) {
+	public Produto(String pCodigo,String pName,float pPreco) {
 		
 		this.setCodigo(pCodigo);
 		this.setNome(pName);
-
-		
-		for(String i:categorias) {
-			this.setCategorias(i);
-		}
 		
 		this.setPreco(pPreco);
    		
@@ -50,14 +44,6 @@ public class Produto {
    		this.setPatchIcon(pPatchIcon);
 	}
 
-	public Produto(String pCodigo,String pName,float pPreco) {
-		
-		this.codigo=pCodigo;
-		this.setNome(pName);
-
-		this.setPreco(pPreco);
-	}
-	
 	/**Construtor completo**/
 	public Produto(String pCodigo,String pName,float pPreco,String[] categorias,String pLocalProduzido,String pContatoDistribuidora,String pDecricao) {
 		
@@ -65,11 +51,6 @@ public class Produto {
 		this.setNome(pName);
 		this.setPreco(pPreco);
 		this.setDecricao(decricao);
-		
-		for(String i:categorias) {
-			this.setCategorias(i);
-		}
-		
 
 		this.setLocalProduzido(localProduzido);
 		
@@ -159,49 +140,21 @@ public class Produto {
 	}
 
 	
-	/**Retornar uma categoria especifica do produto**/
-	public String getCategorias(int index) {
-		return categorias.get(index);
-	}
-	
-	/**Remover uma categoria especifica do produto**/
-	public boolean removeCategoria(int index) {
-		if(categorias.size() > index) {
-			categorias.remove(index);
-			return true;
-		}
-		return false;
-	}
-	
-	/**Limpar todas as Categorias do produto**/
-	public void clearCategoria() {
-		this.categorias.clear();
-	}
-	
-	/**Retornar uma ArrayList da Categorias ao produto**/
-	public ArrayList<String> getCategoriasToArray() {
-		return categorias;
-	}
 
-	/**Adicionar uma nova Categoria ao produto**/
-	public void setCategorias(String pCategorias) {
-		if(!pCategorias.isBlank()) {
-			this.categorias.add(pCategorias);
-		}
-	}
 	
-	/**Adicionar uma ArrayList da Categorias ao produto**/
-	public void setCategorias(String[] pCategorias) {
-			
-		for(String i : pCategorias) {
-			this.categorias.add(i);
-		}
-	}
 	public String getPatchIcon() {
 		return patchIcon;
 	}
 	public void setPatchIcon(String patchIcon) {
 		this.patchIcon = patchIcon;
+	}
+	
+	
+	public String getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 	

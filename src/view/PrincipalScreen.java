@@ -2,7 +2,6 @@ package view;
 
 import java.awt.EventQueue;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -166,13 +165,8 @@ public class PrincipalScreen extends JFrame {
 
 				p.setPreco(Float.parseFloat(precoTF_cadastro.getText()));
 				p.setNome(nomeTX_cadastro.getText());
-				
-				String[] s = categoriasTX_cadastro.getText().split(" ");
-				p.setCategorias(s);
-				
+								
 				p.setContatoDistribuidora(distribuidoraTF.getText());
-				
-				System.out.println(distribuidoraTF.getText());
 
 				p.setLocalProduzido(localTF.getText());
 				p.setDecricao(descricaoTextPane.getText());
@@ -188,7 +182,6 @@ public class PrincipalScreen extends JFrame {
 					
 					
 					p.setPatchIcon(fileChooser.getSelectedFile().toString());
-					System.out.println(p.getPatchIcon());
 				}
 					
 				GrubDados.salvar(p);
