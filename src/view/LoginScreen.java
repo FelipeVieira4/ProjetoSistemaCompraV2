@@ -9,12 +9,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import dados.ConexaoMySQL;
+import produto.Produto;
 
 public class LoginScreen extends JFrame {
 
@@ -79,18 +83,42 @@ public class LoginScreen extends JFrame {
 		
 		JButton botaoOK = new JButton("OK");
 		botaoOK.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
+			public void actionPerformed(ActionEvent e) {	
 				
 				
-				if(usuario.getText().equals(login) && String.valueOf(password.getPassword()).equals(SenhaText)) {
+				ConexaoMySQL conexao = new ConexaoMySQL();
+				String commandQuery = "select usuario, senha from user_info where usuario = ?";
+				
+				String nomeBD="",senhaBD="";
+				
+				try {
+					PreparedStatement statement = conexao.getConexao().prepareStatement(commandQuery);
+					statement.setString(1, usuario.getText());
+				
+					
+					ResultSet resultStatement = statement.executeQuery();
+					
+					
+					while(resultStatement.next()) {
+						nomeBD=resultStatement.getString("usuario");
+						senhaBD=resultStatement.getString("senha");
+					}
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				conexao.closeConexao();
+				
+				if(usuario.getText().equals(nomeBD) && String.valueOf(password.getPassword()).equals(senhaBD)) {
 					PrincipalScreen  principal = new PrincipalScreen();
 					principal.setVisible(true);
 					dispose();
 				}else JOptionPane.showMessageDialog(null,"ERRO LOGIN",null,JOptionPane.CLOSED_OPTION);
 				
 				
-			}
+				}
 		});
 		botaoOK.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		botaoOK.setBounds(105, 182, 54, 41);

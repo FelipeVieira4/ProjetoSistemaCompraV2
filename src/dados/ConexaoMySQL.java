@@ -9,9 +9,9 @@ import javax.swing.JOptionPane;
 import java.sql.Connection;
 
 public class ConexaoMySQL {
-	private String database = "bc_felipe_vieira";
+	private String database = "bd_felipe_vieira";
 	
-	private String usuario = "root";
+	private String usuario = "user_0";
 	private String senha = "root";
 	
 	//url=endereço do servidor MySQL

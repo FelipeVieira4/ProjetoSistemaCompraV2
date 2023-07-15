@@ -1,8 +1,5 @@
 package produto;
 
-import java.util.ArrayList;
-
-
 /**
 *Usado para criar produtos no banco dados.
 *

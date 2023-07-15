@@ -1,6 +1,6 @@
-#drop database bc_felipe_vieira;
-create database bc_felipe_vieira;
-use bc_felipe_vieira;
+#drop database bd_felipe_vieira;
+create database bd_felipe_vieira;
+use bd_felipe_vieira;
 
 create table produto(
 	id int primary key auto_increment,
@@ -15,6 +15,8 @@ create table produto(
 
 create table user_info(
 	id int primary key auto_increment,
-	nome varchar(45),
+	usuario varchar(45),
 	senha varchar(255)
 );
+
+insert into user_info(usuario, senha) values("usuario","123");
