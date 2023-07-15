@@ -20,3 +20,4 @@ create table user_info(
 );
 
 insert into user_info(usuario, senha) values("usuario","123");
+insert into user_info(usuario, senha) values("usuario","test");

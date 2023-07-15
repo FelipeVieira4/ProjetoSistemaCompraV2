@@ -16,9 +16,9 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import dados.ConexaoMySQL;
-import produto.Produto;
 
 public class LoginScreen extends JFrame {
 
@@ -31,9 +31,6 @@ public class LoginScreen extends JFrame {
 	private JPasswordField password;
 	private JLabel lblNewLabel_1;
 
-	private String login= "user";
-	private String SenhaText = "senhaforte";
-	
 	/**
 	 * Launch the application.
 	 */
@@ -89,19 +86,24 @@ public class LoginScreen extends JFrame {
 				ConexaoMySQL conexao = new ConexaoMySQL();
 				String commandQuery = "select usuario, senha from user_info where usuario = ?";
 				
-				String nomeBD="",senhaBD="";
+				
+				ArrayList<String> nomeBD= new ArrayList<String>();
+				ArrayList<String> senhaBD= new ArrayList<String>();
+				
+				//String nomeBD="",senhaBD="";
 				
 				try {
 					PreparedStatement statement = conexao.getConexao().prepareStatement(commandQuery);
 					statement.setString(1, usuario.getText());
 				
-					
 					ResultSet resultStatement = statement.executeQuery();
 					
 					
 					while(resultStatement.next()) {
-						nomeBD=resultStatement.getString("usuario");
-						senhaBD=resultStatement.getString("senha");
+						//nomeBD=resultStatement.getString("usuario");
+						//senhaBD=resultStatement.getString("senha");
+						nomeBD.add(resultStatement.getString("usuario"));
+						senhaBD.add(resultStatement.getString("senha"));
 					}
 					
 				} catch (SQLException e1) {
@@ -111,13 +113,14 @@ public class LoginScreen extends JFrame {
 				
 				conexao.closeConexao();
 				
-				if(usuario.getText().equals(nomeBD) && String.valueOf(password.getPassword()).equals(senhaBD)) {
-					PrincipalScreen  principal = new PrincipalScreen();
-					principal.setVisible(true);
-					dispose();
-				}else JOptionPane.showMessageDialog(null,"ERRO LOGIN",null,JOptionPane.CLOSED_OPTION);
-				
-				
+				for(int i=0;i<nomeBD.size();i++) {
+					if(usuario.getText().equals(nomeBD.get(i)) && String.valueOf(password.getPassword()).equals(senhaBD.get(i))) {
+						PrincipalScreen  principal = new PrincipalScreen();
+						principal.setVisible(true);
+						dispose();
+					}
+				}
+
 				}
 		});
 		botaoOK.setFont(new Font("Tahoma", Font.PLAIN, 14));
