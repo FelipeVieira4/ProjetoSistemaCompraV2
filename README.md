@@ -15,7 +15,7 @@ https://mvnrepository.com/artifact/com.github.waffle/waffle-jna/3.3.0
 
 ### Windows
 
-Basta apenas executar o arquivo commando_sql.sql no MySQL Workbench
+Basta apenas executar o arquivo "commando_sql.sql" no MySQL Workbench
 
 ### Linux
 
