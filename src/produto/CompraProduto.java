@@ -47,7 +47,7 @@ public class CompraProduto{
 
 	/**Calcular o preco da comprar**/
 	public void setPrecoTotal() {
-		if(this.produto!=null)this.precoCompra = (this.produto.getPreco()*this.qtda);
+		this.precoCompra = (this.produto.getPreco()*this.qtda);
 	}
 
 	/**Retornar o produto da compra**/

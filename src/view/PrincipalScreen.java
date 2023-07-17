@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import produto.*;
+import ferramentas.SistemaCompra;
+import ferramentas.Validacao;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
@@ -42,7 +44,7 @@ public class PrincipalScreen extends JFrame {
 
 	
 
-	private ArrayList<CompraProduto> lista_compra = new ArrayList<CompraProduto>();
+	private SistemaCompra sistema_compra = new SistemaCompra();
 	
 	//Componentes Interface
 	private JTextField precoTF_cadastro;
@@ -169,42 +171,6 @@ public class PrincipalScreen extends JFrame {
  		cadastroPanel.add(categoriaCB_cadastro);
  		
 		JButton runButton_cadastro = new JButton("ADD");
-		runButton_cadastro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				Produto p = new Produto();
-				
-				String precoString = precoTF_cadastro.getText();
-				if(!precoString.isBlank() && precoString.matches("[0-9.]*")) {
-					p.setPreco(Float.parseFloat(precoTF_cadastro.getText()));
-				}
-				
-				p.setNome(nomeTX_cadastro.getText());
-								
-				p.setContatoDistribuidora(distribuidoraTF_cadastro.getText());
-
-				
-				p.setLocalProduzido(localTF_cadastro.getText());
-				p.setDecricao(descricaoTextPane.getText());				
-				
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.showOpenDialog(getParent());
-				
-				File file = fileChooser.getSelectedFile();
-				
-				if(file!=null) {
-					ImageIcon img= new ImageIcon(file.toString());//Carrega imagem
-
-					lblfoto_cadastro.setIcon(new ImageIcon((Image)img.getImage().getScaledInstance(lblfoto_cadastro.getWidth(),lblfoto_cadastro.getHeight(),Image.SCALE_SMOOTH)));
-					
-					
-					p.setPatchIcon(fileChooser.getSelectedFile().toString());
-				}
-				
-				p.setCategoria(Categorias.valueOf(categoriaCB_cadastro.getSelectedItem().toString()));
-				CrudDados.salvar(p);
-			}
-		});
 		runButton_cadastro.setBounds(520, 303, 71, 32);
 		cadastroPanel.add(runButton_cadastro);
  		lblDescricao_cadastro.setBounds(279, 0, 122, 25);
@@ -233,29 +199,7 @@ public class PrincipalScreen extends JFrame {
  		listaPanel.add(table_Lista);
  		
  		JButton btnAtualizarTabela = new JButton("Atualizar");
- 		btnAtualizarTabela.addActionListener(new ActionListener() {
- 			public void actionPerformed(ActionEvent e) {
- 
- 					ArrayList<Produto> p = CrudDados.buscaLista();
-	
- 					
- 					//table_Lista.removeAll();
- 					DefaultTableModel modelo =(DefaultTableModel) table_Lista.getModel();
- 					
- 					modelo.setRowCount(0);//limpa todas as colunas do modelo
- 					
- 					//loop adicionar lista_produto ao modelo
-	 				for (Produto produto: p) {
-	 					modelo.addRow(new Object[] {produto.getCodigo(),produto.getNome(),produto.getPreco()});
-						
-	 		        }
-	 				table_Lista.setModel(modelo);
-
-	 							
- 				
- 				
- 			}
- 		});
+ 		
  		btnAtualizarTabela.setBounds(-1, 5, 89, 23);
  		listaPanel.add(btnAtualizarTabela);
  		
@@ -361,30 +305,6 @@ public class PrincipalScreen extends JFrame {
  		lblDescricao_1.setBounds(362, 58, 129, 25);
  		buscaPanel.add(lblDescricao_1);
  		
- 		btnProcurar_buscar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-				if(codigoTF_buscar.getText().matches("[0-9]*")) {
-					Produto p = CrudDados.busca(Integer.parseInt(codigoTF_buscar.getText()));
-					
-					nomeTF_buscar.setText(p.getNome());
-					precoTF_buscar.setText(String.valueOf(p.getPreco()));
-					
-					contatoTF_buscar.setText(p.getContatoDistribuidora());
-					localTF_buscar.setText(p.getLocalProduzido());
-					
-					categoriasTF_buscar.setText(String.valueOf(p.getCategoria()));
-					
-					descricaoTP_buscar.setText(p.getDecricao());
-					
-					ImageIcon img= new ImageIcon(p.getPatchIcon());//Carrega imagem
-					lblfoto_buscar.setIcon(new ImageIcon((Image)img.getImage().getScaledInstance(lblfoto_cadastro.getWidth(),lblfoto_cadastro.getHeight(),Image.SCALE_SMOOTH)));	
-				}
-			}
- 			
- 		});
  		
  		JPanel deletePanel = new JPanel();
  		tabbedPane.addTab("Deleta", null, deletePanel, null);
@@ -401,11 +321,6 @@ public class PrincipalScreen extends JFrame {
  		codigoTF_deleta.setColumns(10);
  		
  		JButton btnDeletaProduto_deleta = new JButton("DELETAR");
- 		btnDeletaProduto_deleta.addActionListener(new ActionListener() {
- 			public void actionPerformed(ActionEvent e) {
- 				if(codigoTF_deleta.getText().matches("[0-9]*"))CrudDados.remove(Integer.parseInt(codigoTF_deleta.getText()));
- 			}
- 		});
  		btnDeletaProduto_deleta.setFont(new Font("Tahoma", Font.PLAIN, 12));
  		btnDeletaProduto_deleta.setBounds(20, 48, 89, 34);
  		deletePanel.add(btnDeletaProduto_deleta);
@@ -507,31 +422,7 @@ public class PrincipalScreen extends JFrame {
  		
  		JButton bntAdicionar_produto = new JButton("ADD");
  		bntAdicionar_produto.setBounds(413, 159, 73, 34);
- 		bntAdicionar_produto.addActionListener(new ActionListener() {
- 			public void actionPerformed(ActionEvent e) {
- 				
- 				if(qtdaTF_compra.getText().matches("[0-9]*") && codigoTF_Compra.getText().matches("[0-9]*")) {
- 					
- 					Produto p =CrudDados.busca(Integer.parseInt(codigoTF_Compra.getText()));
- 					
- 					if(p.getCodigo()!=null) {
- 						CompraProduto cp = new CompraProduto(p,Integer.parseInt(qtdaTF_compra.getText()));
- 	 					
- 						cp.setPrecoTotal();
-	 					lista_compra.add(cp);
-	 					
-	 					
-	 					
-	 					//Adicionar informaçoes do produto na Tabela
-	 					DefaultTableModel modelo =(DefaultTableModel) tableCompra.getModel();
-	 					modelo.addRow(new Object[] {cp.getProduto().getNome(),cp.getQtda(),cp.getPrecoTotal(),lista_compra.size()-1});
-	 					tableCompra.setModel(modelo);
- 					}
- 					
- 					
- 				}
- 			}
- 		});
+
  		bntAdicionar_produto.setFont(new Font("Tahoma", Font.BOLD, 12));
  		listaCompraPanel.add(bntAdicionar_produto);
  		
@@ -569,31 +460,7 @@ public class PrincipalScreen extends JFrame {
  		
  		JButton bntRemover_compra = new JButton("Remover");
  		bntRemover_compra.setBounds(10, 295, 102, 34);
- 		bntRemover_compra.addActionListener(new ActionListener() {
- 			public void actionPerformed(ActionEvent e) {
- 				
- 							
- 				if((removerTF_compra.getText().matches("[0-9]*") && !removerTF_compra.getText().isBlank())&& lista_compra.size()>Integer.parseInt(removerTF_compra.getText()) && Integer.parseInt(removerTF_compra.getText())>=0){
- 					lista_compra.remove(Integer.parseInt(removerTF_compra.getText()));
- 					
- 					DefaultTableModel modelo = (DefaultTableModel) tableCompra.getModel();
- 					
- 					modelo.setRowCount(0); //Limpar tabela
- 					
- 					for(int i=0;i<lista_compra.size();i++) {
- 						modelo.addRow(new Object[] {lista_compra.get(i).getProduto().getNome(),
- 													lista_compra.get(i).getQtda(),
-					 								lista_compra.get(i).getPrecoTotal(),
-					 								i
- 												}
- 						);
-
- 	 				}
- 					tableCompra.setModel(modelo);
- 					
- 				}
- 			}
- 		});
+ 		
  		bntRemover_compra.setFont(new Font("Tahoma", Font.BOLD, 12));
  		listaCompraPanel.add(bntRemover_compra);
  		
@@ -612,6 +479,190 @@ public class PrincipalScreen extends JFrame {
  		JLabel lblNewLabel_2_1_1_1 = new JLabel("Nome");
  		lblNewLabel_2_1_1_1.setBounds(23, 2, 58, 17);
  		listaCompraPanel.add(lblNewLabel_2_1_1_1);
+ 		
+ 		JButton btnFinalizar = new JButton("Finalizar");
+ 		btnFinalizar.setBounds(324, 299, 101, 27);
+ 		listaCompraPanel.add(btnFinalizar);
+ 		
+ 		
+ 		/*Adicionar produto ao banco de dados*/
+		runButton_cadastro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Produto p = new Produto();
+				
+				String precoString = precoTF_cadastro.getText();
+				if(!precoString.isBlank() && Validacao.tipoFloat(precoString)) {
+					p.setPreco(Float.parseFloat(precoTF_cadastro.getText()));
+				}
+				
+				p.setNome(nomeTX_cadastro.getText());
+								
+				p.setContatoDistribuidora(distribuidoraTF_cadastro.getText());
+
+				
+				p.setLocalProduzido(localTF_cadastro.getText());
+				p.setDecricao(descricaoTextPane.getText());				
+				
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.showOpenDialog(getParent());
+				
+				File file = fileChooser.getSelectedFile();
+				
+				if(file!=null) {
+					ImageIcon img= new ImageIcon(file.toString());//Carrega imagem
+
+					lblfoto_cadastro.setIcon(new ImageIcon((Image)img.getImage().getScaledInstance(lblfoto_cadastro.getWidth(),lblfoto_cadastro.getHeight(),Image.SCALE_SMOOTH)));
+					
+					
+					p.setPatchIcon(fileChooser.getSelectedFile().toString());
+				}
+				
+				p.setCategoria(Categorias.valueOf(categoriaCB_cadastro.getSelectedItem().toString()));
+				CrudDados.salvar(p);
+			}
+		});
+ 		
+ 		/*Atualizar a Tabela do Lista Produto*/
+ 		btnAtualizarTabela.addActionListener(new ActionListener() {
+ 			public void actionPerformed(ActionEvent e) {
+ 
+ 					ArrayList<Produto> p = CrudDados.buscaLista();
+	
+ 					
+ 					//table_Lista.removeAll();
+ 					DefaultTableModel modelo =(DefaultTableModel) table_Lista.getModel();
+ 					
+ 					modelo.setRowCount(0);//limpa todas as colunas do modelo
+ 					
+ 					//loop adicionar lista_produto ao modelo
+	 				for (Produto produto: p) {
+	 					modelo.addRow(new Object[] {produto.getCodigo(),produto.getNome(),produto.getPreco()});
+						
+	 		        }
+	 				table_Lista.setModel(modelo);
+
+	 							
+ 				
+ 				
+ 			}
+ 		});
+ 		
+ 		
+ 		/*Buscar as informações do produto*/
+ 		btnProcurar_buscar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+
+				if(Validacao.tipoInt(codigoTF_buscar.getText())) {
+					
+					Produto p = CrudDados.busca(Integer.parseInt(codigoTF_buscar.getText()));
+				
+					
+					if(p!=null) {
+						nomeTF_buscar.setText(p.getNome());
+						precoTF_buscar.setText(String.valueOf(p.getPreco()));
+						
+						contatoTF_buscar.setText(p.getContatoDistribuidora());
+						localTF_buscar.setText(p.getLocalProduzido());
+						
+						categoriasTF_buscar.setText(String.valueOf(p.getCategoria()));
+						
+						descricaoTP_buscar.setText(p.getDecricao());
+						
+						ImageIcon img= new ImageIcon(p.getPatchIcon());//Carrega imagem
+						lblfoto_buscar.setIcon(new ImageIcon((Image)img.getImage().getScaledInstance(lblfoto_cadastro.getWidth(),lblfoto_cadastro.getHeight(),Image.SCALE_SMOOTH)));	
+					
+					
+					}
+				}
+			}
+ 			
+ 		});
+ 		
+ 		btnNewButton.addActionListener(new ActionListener() {
+ 			public void actionPerformed(ActionEvent arg0) {
+ 				
+ 			}
+ 		});
+ 		
+ 		/*Deletar o produto do Banco Dados*/
+ 		btnDeletaProduto_deleta.addActionListener(new ActionListener() {
+ 			public void actionPerformed(ActionEvent e) {
+ 				if(Validacao.tipoInt(codigoTF_deleta.getText())) {
+ 					CrudDados.remove(Integer.parseInt(codigoTF_deleta.getText()));
+ 				}
+ 			}
+ 		});
+ 		
+ 		
+ 		/*Adicionar o produto na Compra*/
+ 		bntAdicionar_produto.addActionListener(new ActionListener() {
+ 			public void actionPerformed(ActionEvent e) {
+ 				
+ 				if(qtdaTF_compra.getText().matches("[0-9]*") && Validacao.tipoInt(codigoTF_Compra.getText())) {
+ 					
+ 					Produto p =CrudDados.busca(Integer.parseInt(codigoTF_Compra.getText()));
+ 					
+ 					if(p!=null) {
+ 						CompraProduto cp = new CompraProduto(p,Integer.parseInt(qtdaTF_compra.getText()));
+ 	 					
+ 						cp.setPrecoTotal();
+	 					sistema_compra.add(cp);
+	 					
+	 					
+	 					
+	 					//Adicionar informaçoes do produto na Tabela
+	 					DefaultTableModel modelo =(DefaultTableModel) tableCompra.getModel();
+	 					modelo.addRow(new Object[] {cp.getProduto().getNome(),cp.getQtda(),cp.getPrecoTotal(),sistema_compra.size()-1});
+	 					tableCompra.setModel(modelo);
+ 					}
+ 					
+ 					precoTF_compra.setText(String.valueOf(sistema_compra.getValor()));
+ 				}
+ 			}
+ 		});
+ 		
+ 		/*Finalizar compra*/
+ 		btnFinalizar.addActionListener(new ActionListener() {
+ 			public void actionPerformed(ActionEvent arg0) {
+ 				sistema_compra.clear();
+ 				precoTF_compra.setText(String.valueOf(sistema_compra.getValor()));
+ 			}
+ 		});
+ 		
+ 		/*Fazer remoção do produto da Compra*/
+ 		bntRemover_compra.addActionListener(new ActionListener() {
+ 			public void actionPerformed(ActionEvent e) {
+ 				
+ 							
+ 				if((Validacao.tipoInt(removerTF_compra.getText()) && !removerTF_compra.getText().isBlank())&& sistema_compra.size()>Integer.parseInt(removerTF_compra.getText()) && Integer.parseInt(removerTF_compra.getText())>=0){
+ 					sistema_compra.remove(Integer.parseInt(removerTF_compra.getText()));
+ 					
+ 					DefaultTableModel modelo = (DefaultTableModel) tableCompra.getModel();
+ 					
+ 					modelo.setRowCount(0); //Limpar tabela
+ 					
+ 					for(int i=0;i<sistema_compra.size();i++) {
+ 						modelo.addRow(new Object[] {sistema_compra.get(i).getProduto().getNome(),
+ 													sistema_compra.get(i).getQtda(),
+					 								sistema_compra.get(i).getPrecoTotal(),
+					 								i
+ 												}
+ 						);
+
+ 	 				}
+ 					tableCompra.setModel(modelo);
+ 					
+ 					
+ 					precoTF_compra.setText(String.valueOf(sistema_compra.getValor()));
+ 					
+ 				}
+ 			}
+ 		});
+ 		
+ 		
  		
 	}
 }

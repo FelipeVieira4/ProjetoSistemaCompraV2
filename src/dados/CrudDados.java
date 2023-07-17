@@ -10,20 +10,17 @@ import produto.Produto;
 
 public class CrudDados {
 	
-	public CrudDados() {
-		
-	}
 	/*
-	 * Adicionar um novo produto ao banco de dados utilizando os valores de um objeto produto já existente
+	 * Adicionar um novo produto ao banco de dados utilizando os valores de um objeto "Produto" já existente
 	 * */
 	public static void salvar(Produto p) {
 		
-		String url_command = "insert into produto(nome,preco,caminhoFoto,localproduzido,contatoDistribuidora,descricao,categoria) values(?,?,?,?,?,?,?)";
+		String queryCommand = "insert into produto(nome,preco,caminhoFoto,localproduzido,contatoDistribuidora,descricao,categoria) values(?,?,?,?,?,?,?)";
 
 		ConexaoMySQL conexaoSQL = new ConexaoMySQL();
 		
 		try {
-			PreparedStatement state = conexaoSQL.getConexao().prepareStatement(url_command);
+			PreparedStatement state = conexaoSQL.getConexao().prepareStatement(queryCommand);
 			
 			state.setString(1, p.getNome());
 			state.setFloat(2, p.getPreco());
@@ -52,12 +49,12 @@ public class CrudDados {
 	 * Método remover um determinado produto do banco de dados atráves do seu ID
 	 * */
 	public static void remove(int id) {
-		String sqlCommand = "delete from produto where id = ?";
+		String queryCommand = "delete from produto where id = ?";
 		
 		ConexaoMySQL conexaoSQL = new ConexaoMySQL();
 			
 		try {
-			PreparedStatement command = conexaoSQL.getConexao().prepareStatement(sqlCommand);
+			PreparedStatement command = conexaoSQL.getConexao().prepareStatement(queryCommand);
 			command.setInt(1, id);
 			command.execute();
 			
@@ -70,11 +67,11 @@ public class CrudDados {
 	}
 	
 	/*
-	 * Método retornar uma Lista dos produtos no banco de dados
+	 * Método retornar uma Lista dos produtos do Banco de Dados com id,nome e preço dos produtos
 	 * */
 	public static ArrayList<Produto> buscaLista() {
 				
-		String urlCommand = "select * from produto";
+		String queryCommand = "select * from produto";
 		
 		//Connection conexao = new ConexaoMySQL().conectar();
 
@@ -85,7 +82,7 @@ public class CrudDados {
 		
 		try {
 
-			PreparedStatement estado = conexaoSQL.getConexao().prepareStatement(urlCommand);
+			PreparedStatement estado = conexaoSQL.getConexao().prepareStatement(queryCommand);
 			ResultSet statement = estado.executeQuery();
 			
 			String id,nome;
@@ -116,7 +113,7 @@ public class CrudDados {
 	 * */
 	public static Produto busca(int id) {
 		
-		String urlCommand = "select * from produto where id = ?";
+		String queryCommand = "select * from produto where id = ?";
 		
 
 		//Connection conexao = new ConexaoMySQL_descontinuado().conectar();
@@ -126,22 +123,23 @@ public class CrudDados {
 		
 		try {
 
-			PreparedStatement estado = conexaoSQL.getConexao().prepareStatement(urlCommand);
+			PreparedStatement estado = conexaoSQL.getConexao().prepareStatement(queryCommand);
 			estado.setInt(1,id);
 			ResultSet statement = estado.executeQuery();
 			
-			statement.first(); //Seta na primeira coluna
-			
-			produto.setPreco(Float.parseFloat(statement.getString("preco")));
-			produto.setNome(statement.getString("nome"));
-			produto.setCodigo(statement.getString("id"));
-			produto.setPatchIcon(statement.getString("caminhoFoto"));
-			produto.setContatoDistribuidora(statement.getString("contatoDistribuidora"));
-			produto.setLocalProduzido(statement.getString("localproduzido"));
-			produto.setDecricao(statement.getString("descricao"));
-			produto.setCategoria(Categorias.valueOf(statement.getString("categoria")));
-
-			
+			if(statement.next()) {
+				statement.first(); //Seta na primeira coluna
+				
+				produto.setPreco(Float.parseFloat(statement.getString("preco")));
+				produto.setNome(statement.getString("nome"));
+				produto.setCodigo(statement.getString("id"));
+				produto.setPatchIcon(statement.getString("caminhoFoto"));
+				produto.setContatoDistribuidora(statement.getString("contatoDistribuidora"));
+				produto.setLocalProduzido(statement.getString("localproduzido"));
+				produto.setDecricao(statement.getString("descricao"));
+				produto.setCategoria(Categorias.valueOf(statement.getString("categoria")));
+			}
+			else return null;
 		}catch(SQLException io) {
 			io.printStackTrace();
 		}
@@ -151,4 +149,22 @@ public class CrudDados {
 
 		return produto;
 	}
+	
+	public static void editarProduto(Produto p) {
+		String queryString = 
+				"update produto set "
+				+"nome = ?"
+				+",preco = ?"
+				+",caminhoFoto = ?"
+				+",localproduzido = ?"
+				+",contatoDistribuidora = ?"
+				+",descricao = ?"
+				+",categoria = ?"
+				+" where id = ?";
+		
+		ConexaoMySQL conexao = new ConexaoMySQL();
+		
+	}
+	
+	
 }

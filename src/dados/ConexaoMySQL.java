@@ -32,7 +32,7 @@ public class ConexaoMySQL {
 		}
 	}
 	
-	public boolean conectarMariaDB() {
+	private boolean conectarMariaDB() {
 		
 		try{
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -47,7 +47,7 @@ public class ConexaoMySQL {
 		
 	}
 	
-	public boolean conectarMySQL() {
+	private boolean conectarMySQL() {
 		
 		
 		try{
@@ -63,6 +63,10 @@ public class ConexaoMySQL {
 		
 	}
 
+	public Connection getConexao() {
+		return this.conexao;
+	}
+	
 	public void closeConexao() {
 		try {
 			conexao.close();
@@ -70,10 +74,6 @@ public class ConexaoMySQL {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public Connection getConexao() {
-		return this.conexao;
 	}
 	
 }
