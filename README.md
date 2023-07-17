@@ -23,8 +23,8 @@ Execute o commando
 
 #### MySQL
 
-**sudo sql < comando_sql.sql**
+***sudo sql < comando_sql.sql***
 
 #### MariaDB
 
-**sudo mariadb < comando_sql.sql**
+***sudo mariadb < comando_sql.sql***
