@@ -1,5 +1,8 @@
 # ProjetoSistemaCompraV2
 
+Projeto faz uso de Banco de Dados tendo suporte para MySQL e MariaDB.
+
+
 ## Drivers utilizados
 
 ### MYSQL
@@ -11,7 +14,7 @@ https://mariadb.com/downloads/connectors/connectors-data-access/java8-connector/
 
 https://mvnrepository.com/artifact/com.github.waffle/waffle-jna/3.3.0
 
-## Criar Banco Dados da aplicação
+## Criar Banco de Dados da aplicação
 
 ### Windows
 
@@ -19,7 +22,7 @@ Basta apenas executar o arquivo "commando_sql.sql" no MySQL Workbench
 
 ### Linux
 
-Execute o seguinte commando
+Basta apenas executar o arquivo "comando_sql.sql" no MySQL Workbench.
 
 #### MySQL
 
