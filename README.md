@@ -19,7 +19,7 @@ Basta apenas executar o arquivo "commando_sql.sql" no MySQL Workbench
 
 ### Linux
 
-Execute o commando
+Execute o seguinte commando
 
 #### MySQL
 
