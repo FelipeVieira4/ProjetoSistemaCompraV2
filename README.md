@@ -1,4 +1,4 @@
-# ProjetoSistemaCompraV2
+# Projeto -SistemaCompra(Versão Final)
 
 O projeto faz uso de Banco de Dados tendo suporte para MySQL e MariaDB.
 
