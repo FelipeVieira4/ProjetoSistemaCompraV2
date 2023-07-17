@@ -1,6 +1,6 @@
 # ProjetoSistemaCompraV2
 
-Projeto faz uso de Banco de Dados tendo suporte para MySQL e MariaDB.
+O projeto faz uso de Banco de Dados tendo suporte para MySQL e MariaDB.
 
 
 ## Drivers utilizados
