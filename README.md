@@ -21,7 +21,7 @@ Basta apenas executar o arquivo "commando_sql.sql" no MySQL Workbench
 
 Execute o commando
 
-#### MariaDB
+#### MySQL
 
 sudo sql < comando_sql.sql
 
