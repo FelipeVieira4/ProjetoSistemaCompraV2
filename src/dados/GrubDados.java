@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import produto.Categorias;
 import produto.Produto;
 
 public class GrubDados {
@@ -17,7 +18,7 @@ public class GrubDados {
 	 * */
 	public static void salvar(Produto p) {
 		
-		String url_command = "insert into produto(nome,preco,caminhoFoto,localproduzido,contatoDistribuidora,descricao) values(?,?,?,?,?,?)";
+		String url_command = "insert into produto(nome,preco,caminhoFoto,localproduzido,contatoDistribuidora,descricao,categoria) values(?,?,?,?,?,?,?)";
 
 		ConexaoMySQL conexaoSQL = new ConexaoMySQL();
 		
@@ -29,9 +30,12 @@ public class GrubDados {
 			state.setString(3, p.getPatchIcon());
 			state.setString(4, p.getLocalProduzido());
 			state.setString(5, p.getContatoDistribuidora());
-			state.setString(6, p.getDecricao());			
+			state.setString(6, p.getDecricao());
+			state.setString(7, String.valueOf(p.getCategoria()));			
 			
+							
 			state.execute();
+			
 			state.close();
 		}catch(SQLException io)
 		{
@@ -84,9 +88,16 @@ public class GrubDados {
 			PreparedStatement estado = conexaoSQL.getConexao().prepareStatement(urlCommand);
 			ResultSet statement = estado.executeQuery();
 			
+			String id,nome;
+			float preco;
 			
 			while(statement.next()) {
-				produtoList.add(new Produto(statement.getString("id"),statement.getString("nome"),Float.parseFloat(statement.getString("preco")),statement.getString("descricao")));
+				
+				id=statement.getString("id");
+				nome=statement.getString("nome");
+				preco=Float.parseFloat(statement.getString("preco"));
+				
+				produtoList.add(new Produto(id,nome,preco));
 			}
 			
 			
@@ -119,16 +130,17 @@ public class GrubDados {
 			estado.setInt(1,id);
 			ResultSet statement = estado.executeQuery();
 			
+			statement.first(); //Seta na primeira coluna
 			
-			while(statement.next()) {
-				produto.setPreco(Float.parseFloat(statement.getString("preco")));
-				produto.setNome(statement.getString("nome"));
-				produto.setCodigo(statement.getString("id"));
-				produto.setPatchIcon(statement.getString("caminhoFoto"));
-				produto.setContatoDistribuidora(statement.getString("contatoDistribuidora"));
-				produto.setLocalProduzido(statement.getString("localproduzido"));
-				produto.setDecricao(statement.getString("descricao"));
-			}
+			produto.setPreco(Float.parseFloat(statement.getString("preco")));
+			produto.setNome(statement.getString("nome"));
+			produto.setCodigo(statement.getString("id"));
+			produto.setPatchIcon(statement.getString("caminhoFoto"));
+			produto.setContatoDistribuidora(statement.getString("contatoDistribuidora"));
+			produto.setLocalProduzido(statement.getString("localproduzido"));
+			produto.setDecricao(statement.getString("descricao"));
+			produto.setCategoria(Categorias.valueOf(statement.getString("categoria")));
+
 			
 		}catch(SQLException io) {
 			io.printStackTrace();

@@ -16,7 +16,7 @@ public class Produto {
 	private String contatoDistribuidora="";	//Contato com a Distribuidora(forma: email)
 	private String localProduzido="";			//Aonde o produto foi fabricado
 
-	private String categoria;
+	private Categorias categoria;
 	private String patchIcon=""; // Substituir o iconProduto
 
 	
@@ -147,11 +147,11 @@ public class Produto {
 	}
 	
 	
-	public String getCategoria() {
+	public Categorias getCategoria() {
 		return categoria;
 	}
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
+	public void setCategoria(Categorias pCategoria) {
+		this.categoria = pCategoria;
 	}
 
 	

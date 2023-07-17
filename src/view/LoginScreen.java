@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -29,7 +28,7 @@ public class LoginScreen extends JFrame {
 	private JPanel contentPane;
 	private JTextField usuario;
 	private JPasswordField password;
-	private JLabel lblNewLabel_1;
+	private JLabel lbLogin;
 
 	/**
 	 * Launch the application.
@@ -52,7 +51,7 @@ public class LoginScreen extends JFrame {
 	 */
 	public LoginScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 267, 293);
+		setBounds(100, 100, 267, 265);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -61,21 +60,21 @@ public class LoginScreen extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Usuario");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel.setBounds(41, 90, 54, 14);
+		lblNewLabel.setBounds(12, 90, 72, 14);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblSenha = new JLabel("Senha");
 		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblSenha.setBounds(41, 139, 54, 14);
+		lblSenha.setBounds(12, 139, 54, 14);
 		contentPane.add(lblSenha);
 		
 		usuario = new JTextField();
-		usuario.setBounds(105, 89, 86, 20);
+		usuario.setBounds(85, 89, 106, 20);
 		contentPane.add(usuario);
 		usuario.setColumns(10);
 		
 		password = new JPasswordField();
-		password.setBounds(105, 138, 86, 20);
+		password.setBounds(85, 138, 106, 20);
 		contentPane.add(password);
 		
 		JButton botaoOK = new JButton("OK");
@@ -121,15 +120,15 @@ public class LoginScreen extends JFrame {
 					}
 				}
 
-				}
+			}
 		});
 		botaoOK.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		botaoOK.setBounds(105, 182, 54, 41);
 		contentPane.add(botaoOK);
 		
-		lblNewLabel_1 = new JLabel("Tela Login");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblNewLabel_1.setBounds(69, 11, 122, 30);
-		contentPane.add(lblNewLabel_1);
+		lbLogin = new JLabel("Tela Login");
+		lbLogin.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lbLogin.setBounds(69, 11, 122, 30);
+		contentPane.add(lbLogin);
 	}
 }

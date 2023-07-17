@@ -1,5 +1,4 @@
-1 - Adicionar categoria
-2 - Fazer a parte Update do GRUD
-3 - Fazer o calculo de preço do Sistema de Compra
-4 - Criar uma tabela no banco dados para armazenar os dados no programa
-4 - Colocar Categorias em enum?
+	Adicionar categoria
+	Fazer a parte Update do GRUD
+	Fazer o calculo de preço do Sistema de Compra
+X -	Criar uma tabela no banco dados para armazenar os dados no programa

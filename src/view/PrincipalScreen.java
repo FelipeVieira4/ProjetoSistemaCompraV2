@@ -28,6 +28,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import dados.GrubDados;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class PrincipalScreen extends JFrame {
 
@@ -45,9 +47,8 @@ public class PrincipalScreen extends JFrame {
 	//Componentes Interface
 	private JTextField precoTF_cadastro;
 	private JTextField nomeTX_cadastro;
-	private JTextField localTF;
-	private JTextField distribuidoraTF;
-	private JTextField categoriasTX_cadastro;
+	private JTextField localTF_cadastro;
+	private JTextField distribuidoraTF_cadastro;
 	private JTable table_Lista;
 	private JTextField codigoTF_buscar;
 	private JTextField contatoTF_buscar;
@@ -61,6 +62,12 @@ public class PrincipalScreen extends JFrame {
 	private JTextField precoTF_compra;
 	private JTextField qtdaTF_compra;
 	private JTextField removerTF_compra;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField codigoTF_editar;
 	
 	
 
@@ -103,109 +110,111 @@ public class PrincipalScreen extends JFrame {
 		tabbedPane.addTab("Cadastro Produto", null, cadastroPanel, null);
 		cadastroPanel.setLayout(null);
 		
-		JLabel lblPreco = new JLabel("preço");
-		lblPreco.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblPreco.setBounds(0, 180, 57, 18);
-		cadastroPanel.add(lblPreco);
+		JLabel lblPreco_cadastro = new JLabel("preço");
+		lblPreco_cadastro.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblPreco_cadastro.setBounds(0, 180, 57, 18);
+		cadastroPanel.add(lblPreco_cadastro);
 		
 		precoTF_cadastro = new JTextField();
 		precoTF_cadastro.setColumns(10);
 		precoTF_cadastro.setBounds(47, 180, 86, 20);
 		cadastroPanel.add(precoTF_cadastro);
 		
-		JLabel lbNome = new JLabel("nome");
-		lbNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbNome.setBounds(0, 148, 57, 18);
-		cadastroPanel.add(lbNome);
+		JLabel lbNome_cadastro = new JLabel("nome");
+		lbNome_cadastro.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbNome_cadastro.setBounds(0, 148, 57, 18);
+		cadastroPanel.add(lbNome_cadastro);
 		
 		nomeTX_cadastro = new JTextField();
 		nomeTX_cadastro.setColumns(10);
 		nomeTX_cadastro.setBounds(47, 148, 196, 20);
 		cadastroPanel.add(nomeTX_cadastro);
 		
-		JLabel lbLocalProduzido = new JLabel("Local Produzido");
-		lbLocalProduzido.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbLocalProduzido.setBounds(0, 242, 120, 18);
-		cadastroPanel.add(lbLocalProduzido);
+		JLabel lbLocalProduzido_cadastro = new JLabel("Local Produzido");
+		lbLocalProduzido_cadastro.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbLocalProduzido_cadastro.setBounds(0, 242, 120, 18);
+		cadastroPanel.add(lbLocalProduzido_cadastro);
 		
-		localTF = new JTextField();
-		localTF.setColumns(10);
-		localTF.setBounds(144, 238, 187, 20);
-		cadastroPanel.add(localTF);
+		localTF_cadastro = new JTextField();
+		localTF_cadastro.setColumns(10);
+		localTF_cadastro.setBounds(154, 242, 187, 20);
+		cadastroPanel.add(localTF_cadastro);
 		
-		JLabel lblContato = new JLabel("Contato Distribuidora");
-		lblContato.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblContato.setBounds(0, 271, 149, 18);
-		cadastroPanel.add(lblContato);
+		JLabel lblContato_cadastro = new JLabel("Contato Distribuidora");
+		lblContato_cadastro.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblContato_cadastro.setBounds(0, 271, 149, 18);
+		cadastroPanel.add(lblContato_cadastro);
 		
-		distribuidoraTF = new JTextField();
-		distribuidoraTF.setColumns(10);
-		distribuidoraTF.setBounds(144, 272, 187, 20);
-		cadastroPanel.add(distribuidoraTF);
+		distribuidoraTF_cadastro = new JTextField();
+		distribuidoraTF_cadastro.setColumns(10);
+		distribuidoraTF_cadastro.setBounds(154, 271, 187, 20);
+		cadastroPanel.add(distribuidoraTF_cadastro);
 		
 		JTextPane descricaoTextPane = new JTextPane();
-		descricaoTextPane.setBounds(279, 24, 322, 124);
+		descricaoTextPane.setBounds(279, 24, 322, 142);
 		cadastroPanel.add(descricaoTextPane);
 		
 		
-		JLabel lblDescricao = new JLabel("Descrição Produto");
-		lblDescricao.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		cadastroPanel.add(lblDescricao);
+		JLabel lblDescricao_cadastro = new JLabel("Descrição Produto");
+		lblDescricao_cadastro.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		cadastroPanel.add(lblDescricao_cadastro);
 		
-		JLabel lblfoto = new JLabel("");
- 		lblfoto.setBounds(0, 11, 150, 120);
- 		cadastroPanel.add(lblfoto);
+		JLabel lblfoto_cadastro = new JLabel("");
+ 		lblfoto_cadastro.setBounds(0, 11, 150, 120);
+ 		cadastroPanel.add(lblfoto_cadastro);
  		
-		JButton runButton = new JButton("ADD");
-		runButton.addActionListener(new ActionListener() {
+ 		JComboBox<Categorias> categoriaCB_cadastro = new JComboBox<Categorias>();
+ 		categoriaCB_cadastro.setModel(new DefaultComboBoxModel<Categorias>(Categorias.values()));
+ 		categoriaCB_cadastro.setBounds(154, 212, 187, 26);
+ 		cadastroPanel.add(categoriaCB_cadastro);
+ 		
+		JButton runButton_cadastro = new JButton("ADD");
+		runButton_cadastro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				Produto p = new Produto();
 				
-
-				p.setPreco(Float.parseFloat(precoTF_cadastro.getText()));
+				String precoString = precoTF_cadastro.getText();
+				if(!precoString.isBlank() && precoString.matches("[0-9.]*")) {
+					p.setPreco(Float.parseFloat(precoTF_cadastro.getText()));
+				}
+				
 				p.setNome(nomeTX_cadastro.getText());
 								
-				p.setContatoDistribuidora(distribuidoraTF.getText());
+				p.setContatoDistribuidora(distribuidoraTF_cadastro.getText());
 
-				p.setLocalProduzido(localTF.getText());
-				p.setDecricao(descricaoTextPane.getText());
 				
-				p.setCategoria(categoriasTX_cadastro.getText());
+				p.setLocalProduzido(localTF_cadastro.getText());
+				p.setDecricao(descricaoTextPane.getText());				
 				
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.showOpenDialog(getParent());
 				
 				File file = fileChooser.getSelectedFile();
+				
 				if(file!=null) {
 					ImageIcon img= new ImageIcon(file.toString());//Carrega imagem
 
-					lblfoto.setIcon(new ImageIcon((Image)img.getImage().getScaledInstance(lblfoto.getWidth(),lblfoto.getHeight(),Image.SCALE_SMOOTH)));
+					lblfoto_cadastro.setIcon(new ImageIcon((Image)img.getImage().getScaledInstance(lblfoto_cadastro.getWidth(),lblfoto_cadastro.getHeight(),Image.SCALE_SMOOTH)));
 					
 					
 					p.setPatchIcon(fileChooser.getSelectedFile().toString());
 				}
-					
+				
+				p.setCategoria(Categorias.valueOf(categoriaCB_cadastro.getSelectedItem().toString()));
 				GrubDados.salvar(p);
-				
-				
-				
-				
 			}
 		});
-		runButton.setBounds(520, 303, 71, 32);
-		cadastroPanel.add(runButton);
-		
- 		categoriasTX_cadastro = new JTextField();
- 		lblDescricao.setBounds(279, 0, 120, 25);
- 		categoriasTX_cadastro.setBounds(144, 211, 447, 20);
- 		cadastroPanel.add(categoriasTX_cadastro);
- 		categoriasTX_cadastro.setColumns(10);
+		runButton_cadastro.setBounds(520, 303, 71, 32);
+		cadastroPanel.add(runButton_cadastro);
+ 		lblDescricao_cadastro.setBounds(279, 0, 122, 25);
  		
  		JLabel lblCategorias = new JLabel("Categorias");
  		lblCategorias.setFont(new Font("Tahoma", Font.PLAIN, 15));
  		lblCategorias.setBounds(0, 215, 120, 18);
  		cadastroPanel.add(lblCategorias);
+ 		
+
  		
  		JPanel listaPanel = new JPanel();
  		tabbedPane.addTab("Lista Produto", null, listaPanel, null);
@@ -282,7 +291,7 @@ public class PrincipalScreen extends JFrame {
  		contatoTF_buscar = new JTextField();
  		contatoTF_buscar.setEditable(false);
  		contatoTF_buscar.setColumns(10);
- 		contatoTF_buscar.setBounds(144, 275, 187, 20);
+ 		contatoTF_buscar.setBounds(154, 274, 187, 20);
  		buscaPanel.add(contatoTF_buscar);
  		
  		JLabel lblContato_buscar = new JLabel("Contato Distribuidora");
@@ -298,16 +307,16 @@ public class PrincipalScreen extends JFrame {
  		localTF_buscar = new JTextField();
  		localTF_buscar.setEditable(false);
  		localTF_buscar.setColumns(10);
- 		localTF_buscar.setBounds(144, 241, 187, 20);
+ 		localTF_buscar.setBounds(154, 245, 187, 20);
  		buscaPanel.add(localTF_buscar);
  		
  		categoriasTF_buscar = new JTextField();
  		categoriasTF_buscar.setEditable(false);
  		categoriasTF_buscar.setColumns(10);
- 		categoriasTF_buscar.setBounds(144, 214, 187, 20);
+ 		categoriasTF_buscar.setBounds(154, 218, 187, 20);
  		buscaPanel.add(categoriasTF_buscar);
  		
- 		JLabel lblCategorias_buscar = new JLabel("Categorias");
+ 		JLabel lblCategorias_buscar = new JLabel("Categoria");
  		lblCategorias_buscar.setFont(new Font("Dialog", Font.PLAIN, 15));
  		lblCategorias_buscar.setBounds(0, 218, 120, 18);
  		buscaPanel.add(lblCategorias_buscar);
@@ -320,7 +329,7 @@ public class PrincipalScreen extends JFrame {
  		precoTF_buscar = new JTextField();
  		precoTF_buscar.setEditable(false);
  		precoTF_buscar.setColumns(10);
- 		precoTF_buscar.setBounds(47, 183, 86, 20);
+ 		precoTF_buscar.setBounds(51, 183, 86, 20);
  		buscaPanel.add(precoTF_buscar);
  		
  		JLabel lbNome_buscar = new JLabel("nome");
@@ -331,11 +340,11 @@ public class PrincipalScreen extends JFrame {
  		nomeTF_buscar = new JTextField();
  		nomeTF_buscar.setEditable(false);
  		nomeTF_buscar.setColumns(10);
- 		nomeTF_buscar.setBounds(47, 151, 196, 20);
+ 		nomeTF_buscar.setBounds(51, 151, 187, 20);
  		buscaPanel.add(nomeTF_buscar);
  		
  		JLabel lblfoto_buscar = new JLabel("");
- 		lblfoto_buscar.setBounds(165, 11, 150, 120);
+ 		lblfoto_buscar.setBounds(165, 11, 176, 128);
  		buscaPanel.add(lblfoto_buscar);
  		
  		JButton btnProcurar_buscar = new JButton("Procurar");
@@ -349,7 +358,7 @@ public class PrincipalScreen extends JFrame {
  		
  		JLabel lblDescricao_1 = new JLabel("Descrição Produto");
  		lblDescricao_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
- 		lblDescricao_1.setBounds(362, 58, 120, 25);
+ 		lblDescricao_1.setBounds(362, 58, 129, 25);
  		buscaPanel.add(lblDescricao_1);
  		
  		btnProcurar_buscar.addActionListener(new ActionListener() {
@@ -366,10 +375,12 @@ public class PrincipalScreen extends JFrame {
 					contatoTF_buscar.setText(p.getContatoDistribuidora());
 					localTF_buscar.setText(p.getLocalProduzido());
 					
+					categoriasTF_buscar.setText(String.valueOf(p.getCategoria()));
+					
 					descricaoTP_buscar.setText(p.getDecricao());
 					
 					ImageIcon img= new ImageIcon(p.getPatchIcon());//Carrega imagem
-					lblfoto_buscar.setIcon(new ImageIcon((Image)img.getImage().getScaledInstance(lblfoto.getWidth(),lblfoto.getHeight(),Image.SCALE_SMOOTH)));	
+					lblfoto_buscar.setIcon(new ImageIcon((Image)img.getImage().getScaledInstance(lblfoto_cadastro.getWidth(),lblfoto_cadastro.getHeight(),Image.SCALE_SMOOTH)));	
 				}
 			}
  			
@@ -385,7 +396,7 @@ public class PrincipalScreen extends JFrame {
  		deletePanel.add(lblCodigo_deleta);
  		
  		codigoTF_deleta = new JTextField();
- 		codigoTF_deleta.setBounds(146, 16, 86, 20);
+ 		codigoTF_deleta.setBounds(146, 16, 47, 20);
  		deletePanel.add(codigoTF_deleta);
  		codigoTF_deleta.setColumns(10);
  		
@@ -400,23 +411,89 @@ public class PrincipalScreen extends JFrame {
  		deletePanel.add(btnDeletaProduto_deleta);
  		
  		JPanel updatePanel = new JPanel();
- 		tabbedPane.addTab("New tab", null, updatePanel, null);
+ 		tabbedPane.addTab("Editar Produto", null, updatePanel, null);
+ 		updatePanel.setLayout(null);
+ 		
+ 		JLabel lbNome_1 = new JLabel("nome");
+ 		lbNome_1.setFont(new Font("Dialog", Font.PLAIN, 15));
+ 		lbNome_1.setBounds(12, 136, 50, 18);
+ 		updatePanel.add(lbNome_1);
+ 		
+ 		textField = new JTextField();
+ 		textField.setColumns(10);
+ 		textField.setBounds(59, 136, 196, 20);
+ 		updatePanel.add(textField);
+ 		
+ 		textField_1 = new JTextField();
+ 		textField_1.setColumns(10);
+ 		textField_1.setBounds(59, 168, 86, 20);
+ 		updatePanel.add(textField_1);
+ 		
+ 		JLabel lblPreco_1 = new JLabel("preço");
+ 		lblPreco_1.setFont(new Font("Dialog", Font.PLAIN, 15));
+ 		lblPreco_1.setBounds(12, 168, 50, 18);
+ 		updatePanel.add(lblPreco_1);
+ 		
+ 		JLabel lblCategorias_1 = new JLabel("Categorias");
+ 		lblCategorias_1.setFont(new Font("Dialog", Font.PLAIN, 15));
+ 		lblCategorias_1.setBounds(12, 203, 73, 18);
+ 		updatePanel.add(lblCategorias_1);
+ 		
+ 		textField_2 = new JTextField();
+ 		textField_2.setColumns(10);
+ 		textField_2.setBounds(166, 203, 187, 20);
+ 		updatePanel.add(textField_2);
+ 		
+ 		textField_3 = new JTextField();
+ 		textField_3.setColumns(10);
+ 		textField_3.setBounds(166, 230, 187, 20);
+ 		updatePanel.add(textField_3);
+ 		
+ 		JLabel lbLocalProduzido_1 = new JLabel("Local Produzido");
+ 		lbLocalProduzido_1.setFont(new Font("Dialog", Font.PLAIN, 15));
+ 		lbLocalProduzido_1.setBounds(12, 230, 111, 18);
+ 		updatePanel.add(lbLocalProduzido_1);
+ 		
+ 		JLabel lblContato_1 = new JLabel("Contato Distribuidora");
+ 		lblContato_1.setFont(new Font("Dialog", Font.PLAIN, 15));
+ 		lblContato_1.setBounds(12, 259, 149, 18);
+ 		updatePanel.add(lblContato_1);
+ 		
+ 		textField_4 = new JTextField();
+ 		textField_4.setColumns(10);
+ 		textField_4.setBounds(166, 259, 187, 20);
+ 		updatePanel.add(textField_4);
+ 		
+ 		JLabel lblCodigo_editar = new JLabel("Codigo");
+ 		lblCodigo_editar.setFont(new Font("Dialog", Font.BOLD, 15));
+ 		lblCodigo_editar.setBounds(12, 12, 58, 26);
+ 		updatePanel.add(lblCodigo_editar);
+ 		
+ 		codigoTF_editar = new JTextField();
+ 		codigoTF_editar.setBounds(74, 16, 50, 21);
+ 		updatePanel.add(codigoTF_editar);
+ 		codigoTF_editar.setColumns(10);
+ 		
+ 		JButton btnNewButton = new JButton("EDITAR");
+ 		btnNewButton.setBounds(12, 50, 86, 27);
+ 		updatePanel.add(btnNewButton);
  		
  		JPanel listaCompraPanel = new JPanel();
  		tabbedPane.addTab("Compra", null, listaCompraPanel, null);
  		listaCompraPanel.setLayout(null);
  		
  		JLabel lblNewLabel = new JLabel("Código");
+ 		lblNewLabel.setBounds(413, 19, 73, 22);
  		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
- 		lblNewLabel.setBounds(413, 37, 49, 22);
  		listaCompraPanel.add(lblNewLabel);
  		
  		codigoTF_Compra = new JTextField();
- 		codigoTF_Compra.setBounds(465, 40, 86, 20);
+ 		codigoTF_Compra.setBounds(413, 39, 86, 20);
  		listaCompraPanel.add(codigoTF_Compra);
  		codigoTF_Compra.setColumns(10);
  		
  		tableCompra = new JTable();
+ 		tableCompra.setBounds(10, 23, 393, 204);
  		tableCompra.setModel(new DefaultTableModel(
  			new Object[][] {
  				{null, null, null, null},
@@ -425,11 +502,11 @@ public class PrincipalScreen extends JFrame {
  				"New column", "New column", "New column", "New column"
  			}
  		));
- 		tableCompra.setBounds(10, 23, 393, 204);
  		listaCompraPanel.add(tableCompra);
  		
  		
- 		JButton bntAdicionar_produto = new JButton("Adicionar");
+ 		JButton bntAdicionar_produto = new JButton("ADD");
+ 		bntAdicionar_produto.setBounds(413, 159, 73, 34);
  		bntAdicionar_produto.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
  				
@@ -456,47 +533,47 @@ public class PrincipalScreen extends JFrame {
  			}
  		});
  		bntAdicionar_produto.setFont(new Font("Tahoma", Font.BOLD, 12));
- 		bntAdicionar_produto.setBounds(449, 160, 102, 34);
  		listaCompraPanel.add(bntAdicionar_produto);
  		
 
  		JLabel lblNewLabel_1 = new JLabel("Preço");
+ 		lblNewLabel_1.setBounds(451, 301, 49, 22);
  		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
- 		lblNewLabel_1.setBounds(413, 205, 49, 22);
  		listaCompraPanel.add(lblNewLabel_1);
  		
  		precoTF_compra = new JTextField();
+ 		precoTF_compra.setBounds(503, 303, 86, 20);
  		precoTF_compra.setEditable(false);
- 		precoTF_compra.setBounds(465, 207, 86, 20);
  		listaCompraPanel.add(precoTF_compra);
  		precoTF_compra.setColumns(10);
  		
  		JLabel lblQtda_compra = new JLabel("QTDA");
- 		lblQtda_compra.setFont(new Font("Tahoma", Font.BOLD, 14));
  		lblQtda_compra.setBounds(413, 87, 49, 22);
+ 		lblQtda_compra.setFont(new Font("Tahoma", Font.BOLD, 14));
  		listaCompraPanel.add(lblQtda_compra);
  		
  		qtdaTF_compra = new JTextField();
+ 		qtdaTF_compra.setBounds(413, 107, 86, 20);
  		qtdaTF_compra.setColumns(10);
- 		qtdaTF_compra.setBounds(465, 90, 86, 20);
  		listaCompraPanel.add(qtdaTF_compra);
  		
  		removerTF_compra = new JTextField();
+ 		removerTF_compra.setBounds(80, 272, 86, 20);
  		removerTF_compra.setColumns(10);
- 		removerTF_compra.setBounds(82, 309, 86, 20);
  		listaCompraPanel.add(removerTF_compra);
  		
  		JLabel lblQtda_compra_1 = new JLabel("Código");
+ 		lblQtda_compra_1.setBounds(10, 271, 71, 22);
  		lblQtda_compra_1.setFont(new Font("Tahoma", Font.BOLD, 14));
- 		lblQtda_compra_1.setBounds(23, 306, 49, 22);
  		listaCompraPanel.add(lblQtda_compra_1);
  		
  		JButton bntRemover_compra = new JButton("Remover");
+ 		bntRemover_compra.setBounds(10, 295, 102, 34);
  		bntRemover_compra.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
  				
  							
- 				if(removerTF_compra.getText().matches("[0-9]*") && lista_compra.size()>Integer.parseInt(removerTF_compra.getText()) && Integer.parseInt(removerTF_compra.getText())>=0){
+ 				if((removerTF_compra.getText().matches("[0-9]*") && !removerTF_compra.getText().isBlank())&& lista_compra.size()>Integer.parseInt(removerTF_compra.getText()) && Integer.parseInt(removerTF_compra.getText())>=0){
  					lista_compra.remove(Integer.parseInt(removerTF_compra.getText()));
  					
  					DefaultTableModel modelo = (DefaultTableModel) tableCompra.getModel();
@@ -518,7 +595,6 @@ public class PrincipalScreen extends JFrame {
  			}
  		});
  		bntRemover_compra.setFont(new Font("Tahoma", Font.BOLD, 12));
- 		bntRemover_compra.setBounds(178, 301, 102, 34);
  		listaCompraPanel.add(bntRemover_compra);
  		
  		JLabel lblNewLabel_2 = new JLabel("Código");
