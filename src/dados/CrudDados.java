@@ -20,20 +20,20 @@ public class CrudDados {
 		ConexaoMySQL conexaoSQL = new ConexaoMySQL();
 		
 		try {
-			PreparedStatement state = conexaoSQL.getConexao().prepareStatement(queryCommand);
+			PreparedStatement statement = conexaoSQL.getConexao().prepareStatement(queryCommand);
 			
-			state.setString(1, p.getNome());
-			state.setFloat(2, p.getPreco());
-			state.setString(3, p.getPatchIcon());
-			state.setString(4, p.getLocalProduzido());
-			state.setString(5, p.getContatoDistribuidora());
-			state.setString(6, p.getDecricao());
-			state.setString(7, String.valueOf(p.getCategoria()));			
+			statement.setString(1, p.getNome());
+			statement.setFloat(2, p.getPreco());
+			statement.setString(3, p.getPatchIcon());
+			statement.setString(4, p.getLocalProduzido());
+			statement.setString(5, p.getContatoDistribuidora());
+			statement.setString(6, p.getDecricao());
+			statement.setString(7, String.valueOf(p.getCategoria()));			
 			
 							
-			state.execute();
+			statement.execute();
 			
-			state.close();
+			statement.close();
 		}catch(SQLException io)
 		{
 			io.printStackTrace();
@@ -54,10 +54,11 @@ public class CrudDados {
 		ConexaoMySQL conexaoSQL = new ConexaoMySQL();
 			
 		try {
-			PreparedStatement command = conexaoSQL.getConexao().prepareStatement(queryCommand);
-			command.setInt(1, id);
-			command.execute();
+			PreparedStatement statement = conexaoSQL.getConexao().prepareStatement(queryCommand);
+			statement.setInt(1, id);
+			statement.execute();
 			
+			statement.close();
 		}catch(SQLException io) {
 			io.printStackTrace();
 		}
@@ -82,22 +83,23 @@ public class CrudDados {
 		
 		try {
 
-			PreparedStatement estado = conexaoSQL.getConexao().prepareStatement(queryCommand);
-			ResultSet statement = estado.executeQuery();
+			PreparedStatement statement = conexaoSQL.getConexao().prepareStatement(queryCommand);
+			ResultSet resultStatement = statement.executeQuery();
 			
 			String id,nome;
 			float preco;
 			
-			while(statement.next()) {
+			while(resultStatement.next()) {
 				
-				id=statement.getString("id");
-				nome=statement.getString("nome");
-				preco=Float.parseFloat(statement.getString("preco"));
+				id=resultStatement.getString("id");
+				nome=resultStatement.getString("nome");
+				preco=Float.parseFloat(resultStatement.getString("preco"));
 				
 				produtoList.add(new Produto(id,nome,preco));
 			}
 			
-			
+			statement.close();
+			resultStatement.close();
 		}catch(SQLException io) {
 			io.printStackTrace();
 		}
@@ -119,27 +121,33 @@ public class CrudDados {
 		//Connection conexao = new ConexaoMySQL_descontinuado().conectar();
 		ConexaoMySQL conexaoSQL = new ConexaoMySQL();
 		
-		Produto produto = new Produto();
+		Produto produto=null;
 		
 		try {
 
-			PreparedStatement estado = conexaoSQL.getConexao().prepareStatement(queryCommand);
-			estado.setInt(1,id);
-			ResultSet statement = estado.executeQuery();
+			PreparedStatement statement = conexaoSQL.getConexao().prepareStatement(queryCommand);
+			statement.setInt(1,id);
+			ResultSet resultStatement = statement.executeQuery();
 			
-			if(statement.next()) {
-				statement.first(); //Seta na primeira coluna
+			if(resultStatement.next()) {
+				resultStatement.first(); //Seta na primeira coluna
 				
-				produto.setPreco(Float.parseFloat(statement.getString("preco")));
-				produto.setNome(statement.getString("nome"));
-				produto.setCodigo(statement.getString("id"));
-				produto.setPatchIcon(statement.getString("caminhoFoto"));
-				produto.setContatoDistribuidora(statement.getString("contatoDistribuidora"));
-				produto.setLocalProduzido(statement.getString("localproduzido"));
-				produto.setDecricao(statement.getString("descricao"));
-				produto.setCategoria(Categorias.valueOf(statement.getString("categoria")));
+				produto = new Produto();
+				
+				produto.setPreco(Float.parseFloat(resultStatement.getString("preco")));
+				produto.setNome(resultStatement.getString("nome"));
+				produto.setCodigo(resultStatement.getString("id"));
+				produto.setPatchIcon(resultStatement.getString("caminhoFoto"));
+				produto.setContatoDistribuidora(resultStatement.getString("contatoDistribuidora"));
+				produto.setLocalProduzido(resultStatement.getString("localproduzido"));
+				produto.setDecricao(resultStatement.getString("descricao"));
+				produto.setCategoria(Categorias.valueOf(resultStatement.getString("categoria")));
 			}
-			else return null;
+	
+			
+			statement.close();
+			resultStatement.close();
+			
 		}catch(SQLException io) {
 			io.printStackTrace();
 		}
@@ -150,20 +158,28 @@ public class CrudDados {
 		return produto;
 	}
 	
-	public static void editarProduto(Produto p) {
+	public static void editarProduto(Produto p,int index) {
 		String queryString = 
 				"update produto set "
 				+"nome = ?"
 				+",preco = ?"
-				+",caminhoFoto = ?"
-				+",localproduzido = ?"
-				+",contatoDistribuidora = ?"
-				+",descricao = ?"
-				+",categoria = ?"
 				+" where id = ?";
 		
 		ConexaoMySQL conexao = new ConexaoMySQL();
 		
+		try {
+			PreparedStatement statement = conexao.getConexao().prepareStatement(queryString);
+			
+			statement.setString(1, p.getNome());
+			statement.setFloat(2, p.getPreco());
+			statement.setInt(3, index);
+			
+			statement.execute();
+			statement.close();
+		}catch(SQLException io) {
+			
+		}
+		conexao.closeConexao();
 	}
 	
 	

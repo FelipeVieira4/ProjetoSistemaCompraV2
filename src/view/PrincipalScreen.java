@@ -13,6 +13,7 @@ import ferramentas.Validacao;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -64,11 +65,8 @@ public class PrincipalScreen extends JFrame {
 	private JTextField precoTF_compra;
 	private JTextField qtdaTF_compra;
 	private JTextField removerTF_compra;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField nomeTF_editar;
+	private JTextField precoTF_editar;
 	private JTextField codigoTF_editar;
 	
 	
@@ -329,55 +327,25 @@ public class PrincipalScreen extends JFrame {
  		tabbedPane.addTab("Editar Produto", null, updatePanel, null);
  		updatePanel.setLayout(null);
  		
- 		JLabel lbNome_1 = new JLabel("nome");
- 		lbNome_1.setFont(new Font("Dialog", Font.PLAIN, 15));
- 		lbNome_1.setBounds(12, 136, 50, 18);
- 		updatePanel.add(lbNome_1);
+ 		JLabel lbNome_editar = new JLabel("nome");
+ 		lbNome_editar.setFont(new Font("Dialog", Font.PLAIN, 15));
+ 		lbNome_editar.setBounds(12, 136, 50, 18);
+ 		updatePanel.add(lbNome_editar);
  		
- 		textField = new JTextField();
- 		textField.setColumns(10);
- 		textField.setBounds(59, 136, 196, 20);
- 		updatePanel.add(textField);
+ 		nomeTF_editar = new JTextField();
+ 		nomeTF_editar.setColumns(10);
+ 		nomeTF_editar.setBounds(59, 136, 196, 20);
+ 		updatePanel.add(nomeTF_editar);
  		
- 		textField_1 = new JTextField();
- 		textField_1.setColumns(10);
- 		textField_1.setBounds(59, 168, 86, 20);
- 		updatePanel.add(textField_1);
+ 		precoTF_editar = new JTextField();
+ 		precoTF_editar.setColumns(10);
+ 		precoTF_editar.setBounds(59, 168, 86, 20);
+ 		updatePanel.add(precoTF_editar);
  		
- 		JLabel lblPreco_1 = new JLabel("preço");
- 		lblPreco_1.setFont(new Font("Dialog", Font.PLAIN, 15));
- 		lblPreco_1.setBounds(12, 168, 50, 18);
- 		updatePanel.add(lblPreco_1);
- 		
- 		JLabel lblCategorias_1 = new JLabel("Categorias");
- 		lblCategorias_1.setFont(new Font("Dialog", Font.PLAIN, 15));
- 		lblCategorias_1.setBounds(12, 203, 73, 18);
- 		updatePanel.add(lblCategorias_1);
- 		
- 		textField_2 = new JTextField();
- 		textField_2.setColumns(10);
- 		textField_2.setBounds(166, 203, 187, 20);
- 		updatePanel.add(textField_2);
- 		
- 		textField_3 = new JTextField();
- 		textField_3.setColumns(10);
- 		textField_3.setBounds(166, 230, 187, 20);
- 		updatePanel.add(textField_3);
- 		
- 		JLabel lbLocalProduzido_1 = new JLabel("Local Produzido");
- 		lbLocalProduzido_1.setFont(new Font("Dialog", Font.PLAIN, 15));
- 		lbLocalProduzido_1.setBounds(12, 230, 111, 18);
- 		updatePanel.add(lbLocalProduzido_1);
- 		
- 		JLabel lblContato_1 = new JLabel("Contato Distribuidora");
- 		lblContato_1.setFont(new Font("Dialog", Font.PLAIN, 15));
- 		lblContato_1.setBounds(12, 259, 149, 18);
- 		updatePanel.add(lblContato_1);
- 		
- 		textField_4 = new JTextField();
- 		textField_4.setColumns(10);
- 		textField_4.setBounds(166, 259, 187, 20);
- 		updatePanel.add(textField_4);
+ 		JLabel lblPreco_editar = new JLabel("preço");
+ 		lblPreco_editar.setFont(new Font("Dialog", Font.PLAIN, 15));
+ 		lblPreco_editar.setBounds(12, 168, 50, 18);
+ 		updatePanel.add(lblPreco_editar);
  		
  		JLabel lblCodigo_editar = new JLabel("Codigo");
  		lblCodigo_editar.setFont(new Font("Dialog", Font.BOLD, 15));
@@ -389,9 +357,9 @@ public class PrincipalScreen extends JFrame {
  		updatePanel.add(codigoTF_editar);
  		codigoTF_editar.setColumns(10);
  		
- 		JButton btnNewButton = new JButton("EDITAR");
- 		btnNewButton.setBounds(12, 50, 86, 27);
- 		updatePanel.add(btnNewButton);
+ 		JButton btnEditar = new JButton("EDITAR");
+ 		btnEditar.setBounds(12, 50, 86, 27);
+ 		updatePanel.add(btnEditar);
  		
  		JPanel listaCompraPanel = new JPanel();
  		tabbedPane.addTab("Compra", null, listaCompraPanel, null);
@@ -555,7 +523,7 @@ public class PrincipalScreen extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 
-				if(Validacao.tipoInt(codigoTF_buscar.getText())) {
+				if(Validacao.tipoInt(codigoTF_buscar.getText()) && !codigoTF_buscar.getText().isBlank()) {
 					
 					Produto p = CrudDados.busca(Integer.parseInt(codigoTF_buscar.getText()));
 				
@@ -581,8 +549,22 @@ public class PrincipalScreen extends JFrame {
  			
  		});
  		
- 		btnNewButton.addActionListener(new ActionListener() {
+ 		/*
+ 		 * Método para alterar nome e preço de um determinado produto
+ 		 **/
+ 		btnEditar.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent arg0) {
+ 				
+ 				Produto produtoEdita = new Produto();
+ 				
+ 				produtoEdita.setNome(nomeTF_editar.getText());
+ 				
+
+ 				if(Validacao.tipoInt(codigoTF_editar.getText()) && Validacao.tipoFloat(precoTF_editar.getText())) {
+ 					
+ 					produtoEdita.setPreco(Float.parseFloat(precoTF_editar.getText()));
+ 					CrudDados.editarProduto(produtoEdita,Integer.parseInt(codigoTF_editar.getText()));
+ 				}else JOptionPane.showMessageDialog(null,"Erro nos valores digitados",null,JOptionPane.OK_OPTION);
  				
  			}
  		});
@@ -601,7 +583,7 @@ public class PrincipalScreen extends JFrame {
  		bntAdicionar_produto.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
  				
- 				if(qtdaTF_compra.getText().matches("[0-9]*") && Validacao.tipoInt(codigoTF_Compra.getText())) {
+ 				if(Validacao.tipoInt(qtdaTF_compra.getText()) && Validacao.tipoInt(codigoTF_Compra.getText())) {
  					
  					Produto p =CrudDados.busca(Integer.parseInt(codigoTF_Compra.getText()));
  					
@@ -636,9 +618,14 @@ public class PrincipalScreen extends JFrame {
  		bntRemover_compra.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
  				
- 							
- 				if((Validacao.tipoInt(removerTF_compra.getText()) && !removerTF_compra.getText().isBlank())&& sistema_compra.size()>Integer.parseInt(removerTF_compra.getText()) && Integer.parseInt(removerTF_compra.getText())>=0){
- 					sistema_compra.remove(Integer.parseInt(removerTF_compra.getText()));
+ 				int removerInt = -1;
+ 				if(Validacao.tipoInt(removerTF_compra.getText())) {
+ 					removerInt=Integer.parseInt(removerTF_compra.getText());
+ 				}
+
+ 				if(Validacao.tipoInt(qtdaTF_compra.getText()) && sistema_compra.size() > removerInt && removerInt >= 0){
+ 					
+ 					sistema_compra.remove(removerInt);
  					
  					DefaultTableModel modelo = (DefaultTableModel) tableCompra.getModel();
  					

@@ -154,6 +154,4 @@ public class Produto {
 		this.categoria = pCategoria;
 	}
 
-	
-	
 }

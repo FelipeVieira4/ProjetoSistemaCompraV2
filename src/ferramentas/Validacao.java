@@ -4,7 +4,7 @@ public class Validacao {
 
 	public static boolean tipoInt(String valor) {
 		
-		if(valor.matches("[0-9]*")) {
+		if(valor.matches("[0-9]*") && !valor.isBlank()) {
 			return true;
 		}
 		
@@ -18,6 +18,8 @@ public class Validacao {
 		}catch(NumberFormatException io) {
 			return false;
 		}
-		return true;
+		
+		if(!valor.isBlank())return true;
+		return false;
 	}
 }
