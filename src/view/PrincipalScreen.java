@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import dados.GrubDados;
+import dados.CrudDados;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
@@ -202,7 +202,7 @@ public class PrincipalScreen extends JFrame {
 				}
 				
 				p.setCategoria(Categorias.valueOf(categoriaCB_cadastro.getSelectedItem().toString()));
-				GrubDados.salvar(p);
+				CrudDados.salvar(p);
 			}
 		});
 		runButton_cadastro.setBounds(520, 303, 71, 32);
@@ -236,7 +236,7 @@ public class PrincipalScreen extends JFrame {
  		btnAtualizarTabela.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
  
- 					ArrayList<Produto> p = GrubDados.buscaLista();
+ 					ArrayList<Produto> p = CrudDados.buscaLista();
 	
  					
  					//table_Lista.removeAll();
@@ -367,7 +367,7 @@ public class PrincipalScreen extends JFrame {
 				// TODO Auto-generated method stub
 				
 				if(codigoTF_buscar.getText().matches("[0-9]*")) {
-					Produto p = GrubDados.busca(Integer.parseInt(codigoTF_buscar.getText()));
+					Produto p = CrudDados.busca(Integer.parseInt(codigoTF_buscar.getText()));
 					
 					nomeTF_buscar.setText(p.getNome());
 					precoTF_buscar.setText(String.valueOf(p.getPreco()));
@@ -403,7 +403,7 @@ public class PrincipalScreen extends JFrame {
  		JButton btnDeletaProduto_deleta = new JButton("DELETAR");
  		btnDeletaProduto_deleta.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
- 				if(codigoTF_deleta.getText().matches("[0-9]*"))GrubDados.remove(Integer.parseInt(codigoTF_deleta.getText()));
+ 				if(codigoTF_deleta.getText().matches("[0-9]*"))CrudDados.remove(Integer.parseInt(codigoTF_deleta.getText()));
  			}
  		});
  		btnDeletaProduto_deleta.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -512,7 +512,7 @@ public class PrincipalScreen extends JFrame {
  				
  				if(qtdaTF_compra.getText().matches("[0-9]*") && codigoTF_Compra.getText().matches("[0-9]*")) {
  					
- 					Produto p =GrubDados.busca(Integer.parseInt(codigoTF_Compra.getText()));
+ 					Produto p =CrudDados.busca(Integer.parseInt(codigoTF_Compra.getText()));
  					
  					if(p.getCodigo()!=null) {
  						CompraProduto cp = new CompraProduto(p,Integer.parseInt(qtdaTF_compra.getText()));

@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import produto.Categorias;
 import produto.Produto;
 
-public class GrubDados {
+public class CrudDados {
 	
-	public GrubDados() {
+	public CrudDados() {
 		
 	}
 	/*
