@@ -498,7 +498,6 @@ public class PrincipalScreen extends JFrame {
  					ArrayList<Produto> p = CrudDados.buscaLista();
 	
  					
- 					//table_Lista.removeAll();
  					DefaultTableModel modelo =(DefaultTableModel) table_Lista.getModel();
  					
  					modelo.setRowCount(0);//limpa todas as colunas do modelo

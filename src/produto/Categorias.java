@@ -1,5 +1,5 @@
 package produto;
 
 public enum Categorias {
-	Indefinido,Comida,EletroDomentico,ProdutoLimpeza;
+	Indefinido,Comida,EletroDoméstico,Limpeza,Cósmetico,Bebida;
 }
