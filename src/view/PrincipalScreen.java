@@ -454,9 +454,7 @@ public class PrincipalScreen extends JFrame {
  		
  		
  		/*Adicionar produto ao banco de dados*/
-		runButton_cadastro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
+		runButton_cadastro.addActionListener((ActionListener) -> {
 				Produto p = new Produto();
 				
 				String precoString = precoTF_cadastro.getText();
@@ -488,40 +486,31 @@ public class PrincipalScreen extends JFrame {
 				
 				p.setCategoria(Categorias.valueOf(categoriaCB_cadastro.getSelectedItem().toString()));
 				CrudDados.salvar(p);
+			
 			}
-		});
+		);
  		
  		/*Atualizar a Tabela do Lista Produto*/
- 		btnAtualizarTabela.addActionListener(new ActionListener() {
- 			public void actionPerformed(ActionEvent e) {
- 
- 					ArrayList<Produto> p = CrudDados.buscaLista();
-	
- 					
- 					DefaultTableModel modelo =(DefaultTableModel) table_Lista.getModel();
- 					
- 					modelo.setRowCount(0);//limpa todas as colunas do modelo
- 					
- 					//loop adicionar lista_produto ao modelo
-	 				for (Produto produto: p) {
-	 					modelo.addRow(new Object[] {produto.getCodigo(),produto.getNome(),produto.getPreco()});
-						
-	 		        }
-	 				table_Lista.setModel(modelo);
+ 		btnAtualizarTabela.addActionListener((ActionListener) -> {
+				ArrayList<Produto> p = CrudDados.buscaLista();
 
-	 							
- 				
- 				
+				
+				DefaultTableModel modelo =(DefaultTableModel) table_Lista.getModel();
+				
+				modelo.setRowCount(0);//limpa todas as colunas do modelo
+				
+				//loop adicionar lista_produto ao modelo
+ 				for (Produto produto: p) {
+ 					modelo.addRow(new Object[] {produto.getCodigo(),produto.getNome(),produto.getPreco()});
+					
+ 		        }
+ 				table_Lista.setModel(modelo);
  			}
- 		});
+ 		);
  		
  		
  		/*Buscar as informações do produto*/
- 		btnProcurar_buscar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-
+ 		btnProcurar_buscar.addActionListener((ActionListener)-> {
 				if(Validacao.tipoInt(codigoTF_buscar.getText()) && !codigoTF_buscar.getText().isBlank()) {
 					
 					Produto p = CrudDados.busca(Integer.parseInt(codigoTF_buscar.getText()));
@@ -544,16 +533,14 @@ public class PrincipalScreen extends JFrame {
 					
 					}
 				}
-			}
  			
- 		});
+ 			}
+ 		);
  		
  		/*
  		 * Método para alterar nome e preço de um determinado produto
  		 **/
- 		btnEditar.addActionListener(new ActionListener() {
- 			public void actionPerformed(ActionEvent arg0) {
- 				
+ 		btnEditar.addActionListener((ActionListener) -> {		
  				Produto produtoEdita = new Produto();
  				
  				produtoEdita.setNome(nomeTF_editar.getText());
@@ -566,22 +553,20 @@ public class PrincipalScreen extends JFrame {
  				}else JOptionPane.showMessageDialog(null,"Erro nos valores digitados",null,JOptionPane.OK_OPTION);
  				
  			}
- 		});
+ 		);
  		
  		/*Deletar o produto do Banco Dados*/
- 		btnDeletaProduto_deleta.addActionListener(new ActionListener() {
- 			public void actionPerformed(ActionEvent e) {
+ 		btnDeletaProduto_deleta.addActionListener((ActionListener)-> {
  				if(Validacao.tipoInt(codigoTF_deleta.getText())) {
  					CrudDados.remove(Integer.parseInt(codigoTF_deleta.getText()));
  				}
  			}
- 		});
+ 		);
  		
  		
  		/*Adicionar o produto na Compra*/
- 		bntAdicionar_produto.addActionListener(new ActionListener() {
- 			public void actionPerformed(ActionEvent e) {
- 				
+ 		bntAdicionar_produto.addActionListener((ActionListener) -> {
+ 	
  				if(Validacao.tipoInt(qtdaTF_compra.getText()) && Validacao.tipoInt(codigoTF_Compra.getText())) {
  					
  					Produto p =CrudDados.busca(Integer.parseInt(codigoTF_Compra.getText()));
@@ -601,52 +586,52 @@ public class PrincipalScreen extends JFrame {
  					}
  					
  					precoTF_compra.setText(String.valueOf(sistema_compra.getValor()));
+ 				
  				}
  			}
- 		});
+ 		);
  		
  		/*Finalizar compra*/
- 		btnFinalizar.addActionListener(new ActionListener() {
- 			public void actionPerformed(ActionEvent arg0) {
+ 		btnFinalizar.addActionListener((ActionListener) -> {
  				sistema_compra.clear();
- 				precoTF_compra.setText(String.valueOf(sistema_compra.getValor()));
+ 				precoTF_compra.setText("0"); 			
  			}
- 		});
+ 		);
  		
  		/*Fazer remoção do produto da Compra*/
- 		bntRemover_compra.addActionListener(new ActionListener() {
- 			public void actionPerformed(ActionEvent e) {
- 				
+ 		bntRemover_compra.addActionListener((ActionListener) -> {
+ 			
  				int removerInt = -1;
  				if(Validacao.tipoInt(removerTF_compra.getText())) {
  					removerInt=Integer.parseInt(removerTF_compra.getText());
  				}
 
  				if(Validacao.tipoInt(qtdaTF_compra.getText()) && sistema_compra.size() > removerInt && removerInt >= 0){
- 					
- 					sistema_compra.remove(removerInt);
- 					
- 					DefaultTableModel modelo = (DefaultTableModel) tableCompra.getModel();
- 					
- 					modelo.setRowCount(0); //Limpar tabela
- 					
- 					for(int i=0;i<sistema_compra.size();i++) {
- 						modelo.addRow(new Object[] {sistema_compra.get(i).getProduto().getNome(),
- 													sistema_compra.get(i).getQtda(),
-					 								sistema_compra.get(i).getPrecoTotal(),
-					 								i
- 												}
- 						);
-
- 	 				}
- 					tableCompra.setModel(modelo);
- 					
- 					
- 					precoTF_compra.setText(String.valueOf(sistema_compra.getValor()));
- 					
- 				}
+	 					
+	 					sistema_compra.remove(removerInt);
+	 					
+	 					DefaultTableModel modelo = (DefaultTableModel) tableCompra.getModel();
+	 					
+	 					modelo.setRowCount(0); //Limpar tabela
+	 					
+	 					for(int i=0;i<sistema_compra.size();i++) {
+	 						modelo.addRow(new Object[] {sistema_compra.get(i).getProduto().getNome(),
+	 													sistema_compra.get(i).getQtda(),
+						 								sistema_compra.get(i).getPrecoTotal(),
+						 								i
+	 												}
+	 						);
+	
+	 	 				}
+	 					tableCompra.setModel(modelo);
+	 					
+	 					
+	 					precoTF_compra.setText(String.valueOf(sistema_compra.getValor()));
+	 					
+	 				
+	 			}
  			}
- 		});
+ 		);
  		
  		
  		
